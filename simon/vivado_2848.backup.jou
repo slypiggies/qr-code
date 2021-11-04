@@ -1,0 +1,67 @@
+#-----------------------------------------------------------
+# Vivado v2016.3 (64-bit)
+# SW Build 1682563 on Mon Oct 10 19:07:27 MDT 2016
+# IP Build 1681267 on Mon Oct 10 21:28:31 MDT 2016
+# Start of session at: Mon Jun 07 16:07:58 2021
+# Process ID: 2848
+# Current directory: D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent9232 D:\work\2021_ZedBoard_Cam\Cam_OV7670_Vivado\ov7670_cam\ov7670_cam.xpr
+# Log file: D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/vivado.log
+# Journal file: D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.xpr
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+current_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
+set_property PROBES.FILE {} [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROGRAM.FILE {D:/work/2021_ZedBoard_Cam/Cam_OV7670_Vivado/ov7670_cam/ov7670_cam.runs/impl_1/ov7670_top.bit} [lindex [get_hw_devices xc7z020_1] 0]
+program_hw_devices [lindex [get_hw_devices xc7z020_1] 0]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 2
+wait_on_run impl_1
