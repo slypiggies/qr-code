@@ -1,0 +1,93 @@
+Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
+| Date         : Fri Nov  5 01:38:48 2021
+| Host         : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file main_control_sets_placed.rpt
+| Design       : main
+| Device       : xc7z020
+------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    15 |
+|    Minimum number of control sets                        |    15 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    60 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    15 |
+| >= 0 to < 4        |     4 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     2 |
+| >= 12 to < 14      |     1 |
+| >= 14 to < 16      |     1 |
+| >= 16              |     5 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              21 |           14 |
+| No           | No                    | Yes                    |              12 |            5 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |              15 |            8 |
+| Yes          | No                    | Yes                    |             127 |           33 |
+| Yes          | Yes                   | No                     |              29 |           12 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++--------------------------+-----------------------------------------+------------------------------------------+------------------+----------------+--------------+
+|       Clock Signal       |              Enable Signal              |             Set/Reset Signal             | Slice Load Count | Bel Load Count | Bels / Slice |
++--------------------------+-----------------------------------------+------------------------------------------+------------------+----------------+--------------+
+|  clk_wizard_i/inst/clk50 |                                         | debouncer_i/BTNC2                        |                1 |              1 |         1.00 |
+|  clk_wizard_i/inst/clk50 | debouncer_i/OV_RESET_OBUF               | ov_controller_i/ov_i2c_i/OV_SIOC_i_1_n_0 |                1 |              1 |         1.00 |
+|  OV_PCLK_IBUF_BUFG       |                                         | debouncer_i/OV_VSYNC                     |                1 |              1 |         1.00 |
+|  clk_wizard_i/inst/clk50 |                                         |                                          |                2 |              3 |         1.50 |
+|  clk_wizard_i/inst/clk50 | ov_controller_i/ov_i2c_i/cnt[7]_i_1_n_0 | debouncer_i/BTNC2                        |                3 |              8 |         2.67 |
+|  clk_wizard_i/inst/clk50 | ov_controller_i/ov_i2c_i/E[0]           | debouncer_i/BTNC2                        |                3 |              8 |         2.67 |
+|  clk_wizard_i/inst/clk25 |                                         | debouncer_i/BTNC2                        |                3 |             10 |         3.33 |
+|  clk_wizard_i/inst/clk25 | vga_i/v_cnt[9]_i_1_n_0                  | debouncer_i/BTNC2                        |                3 |             10 |         3.33 |
+|  clk_wizard_i/inst/clk25 | debouncer_i/OV_RESET_OBUF               | vga_i/VGA_R[3]_i_1_n_0                   |                7 |             12 |         1.71 |
+|  OV_PCLK_IBUF_BUFG       | debouncer_i/E[0]                        |                                          |                8 |             15 |         1.88 |
+|  CLK100_IBUF             | debouncer_i/OV_RESET_OBUF               | debouncer_i/clear                        |                4 |             16 |         4.00 |
+|  clk_wizard_i/inst/clk25 |                                         |                                          |               12 |             18 |         1.50 |
+|  clk_wizard_i/inst/clk25 | vga_i/addr20                            | debouncer_i/BTNC2                        |                5 |             19 |         3.80 |
+|  OV_PCLK_IBUF_BUFG       | ov_capturer_rgb565_i/addr20             | debouncer_i/OV_VSYNC                     |                5 |             19 |         3.80 |
+|  clk_wizard_i/inst/clk50 | ov_controller_i/ov_i2c_i/busy0          | debouncer_i/BTNC2                        |               14 |             63 |         4.50 |
++--------------------------+-----------------------------------------+------------------------------------------+------------------+----------------+--------------+
+
+
