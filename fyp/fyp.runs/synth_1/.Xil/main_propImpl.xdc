@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:C:/Users/admin/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc rfile:../../../fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:C:/Data/FYP/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc rfile:../../../fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:82 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN Y9 [get_ports {CLK100}];  # "GCLK"
 set_property src_info {type:XDC file:1 line:87 export:INPUT save:INPUT read:READ} [current_design]

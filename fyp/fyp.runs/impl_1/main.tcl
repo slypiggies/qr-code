@@ -17,7 +17,7 @@ proc create_report { reportName command } {
   }
 }
 namespace eval ::optrace {
-  variable script "C:/Users/admin/fyp/fyp.runs/impl_1/main.tcl"
+  variable script "C:/Data/FYP/fyp/fyp.runs/impl_1/main.tcl"
   variable category "vivado_impl"
 }
 
@@ -123,7 +123,6 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 1
-  set_param xicom.use_bs_reader 1
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7z020clg484-1
   set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
@@ -131,18 +130,18 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir C:/Users/admin/fyp/fyp.cache/wt [current_project]
-  set_property parent.project_path C:/Users/admin/fyp/fyp.xpr [current_project]
-  set_property ip_output_repo C:/Users/admin/fyp/fyp.cache/ip [current_project]
+  set_property webtalk.parent_dir C:/Data/FYP/fyp/fyp.cache/wt [current_project]
+  set_property parent.project_path C:/Data/FYP/fyp/fyp.xpr [current_project]
+  set_property ip_output_repo C:/Data/FYP/fyp/fyp.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet C:/Users/admin/fyp/fyp.runs/synth_1/main.dcp
-  read_ip -quiet c:/Users/admin/fyp/fyp.srcs/sources_1/ip/clk_wizard/clk_wizard.xci
-  read_ip -quiet c:/Users/admin/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
+  add_files -quiet C:/Data/FYP/fyp/fyp.runs/synth_1/main.dcp
+  read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
+  read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/clk_wizard/clk_wizard.xci
 OPTRACE "read constraints: implementation" START { }
-  read_xdc C:/Users/admin/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc
+  read_xdc C:/Data/FYP/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "add files" END { }
 OPTRACE "link_design" START { }

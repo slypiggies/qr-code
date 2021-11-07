@@ -1,10 +1,10 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-// Date        : Thu Nov  4 20:25:15 2021
+// Date        : Thu Nov  4 20:25:12 2021
 // Host        : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
-// Command     : write_verilog -force -mode synth_stub
-//               c:/Users/admin/fyp/fyp.gen/sources_1/ip/frame_buffer/frame_buffer_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top frame_buffer -prefix
+//               frame_buffer_ frame_buffer_stub.v
 // Design      : frame_buffer
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-1

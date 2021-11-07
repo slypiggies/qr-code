@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "C:/Users/admin/fyp/fyp.runs/synth_1/main.tcl"
+  variable script "C:/Data/FYP/fyp/fyp.runs/synth_1/main.tcl"
   variable category "vivado_synth"
 }
 
@@ -70,8 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 1
-set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg484-1
 
@@ -79,32 +77,32 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir C:/Users/admin/fyp/fyp.cache/wt [current_project]
-set_property parent.project_path C:/Users/admin/fyp/fyp.xpr [current_project]
+set_property webtalk.parent_dir C:/Data/FYP/fyp/fyp.cache/wt [current_project]
+set_property parent.project_path C:/Data/FYP/fyp/fyp.xpr [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
 set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
-set_property ip_output_repo c:/Users/admin/fyp/fyp.cache/ip [current_project]
+set_property ip_output_repo c:/Data/FYP/fyp/fyp.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -vhdl2008 -library xil_defaultlib {
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/debouncer.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/ov_capturer_rgb565.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/ov_controller.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/ov_i2c.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/ov_register.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/vga.vhd
-  C:/Users/admin/fyp/fyp.srcs/sources_1/new/main.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/debouncer.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_capturer_rgb565.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_controller.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_i2c.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_register.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/vga.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/main.vhd
 }
-read_ip -quiet c:/Users/admin/fyp/fyp.srcs/sources_1/ip/clk_wizard/clk_wizard.xci
-set_property used_in_implementation false [get_files -all c:/Users/admin/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/admin/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard.xdc]
-set_property used_in_implementation false [get_files -all c:/Users/admin/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_ooc.xdc]
+read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer/frame_buffer_ooc.xdc]
 
-read_ip -quiet c:/Users/admin/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
-set_property used_in_implementation false [get_files -all c:/Users/admin/fyp/fyp.gen/sources_1/ip/frame_buffer/frame_buffer_ooc.xdc]
+read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/clk_wizard/clk_wizard.xci
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_board.xdc]
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard.xdc]
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -115,9 +113,11 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc C:/Users/admin/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc
-set_property used_in_implementation false [get_files C:/Users/admin/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc]
+read_xdc C:/Data/FYP/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc
+set_property used_in_implementation false [get_files C:/Data/FYP/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc]
 
+read_xdc dont_touch.xdc
+set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
