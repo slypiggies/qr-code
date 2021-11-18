@@ -29,10 +29,10 @@ entity vga is
 end entity;
 
 architecture vga_a of vga is
-	signal addr2: unsigned(addr'range);
+	signal addr_2: unsigned(addr'range);
 	signal h_cnt, v_cnt: unsigned(addr'range);
 begin
-	addr <= std_logic_vector(addr2);
+	addr <= std_logic_vector(addr_2);
 	
 	VGA_HS <= H_POLARITY when h_cnt >= H + H_FRONT_PORCH and h_cnt < H + H_FRONT_PORCH + H_SYNC_PULSE
 		else not H_POLARITY;
@@ -41,7 +41,7 @@ begin
 	
 	process (all) begin
 		if reset = '1' then
-			addr2 <= (others => '0');
+			addr_2 <= (others => '0');
 			h_cnt <= (others => '0');
 			v_cnt <= (others => '0');
 		elsif rising_edge(clk25) then
@@ -60,13 +60,13 @@ begin
 				VGA_R <= pixel(11 downto 8);
 				VGA_G <= pixel(7 downto 4);
 				VGA_B <= pixel(3 downto 0);
-				addr2 <= addr2 + 1;
+				addr_2 <= addr_2 + 1;
 			else
 				VGA_R <= (others => '0');
 				VGA_G <= (others => '0');
 				VGA_B <= (others => '0');
 				if v_cnt = V then
-					addr2 <= (others => '0');
+					addr_2 <= (others => '0');
 				end if;
 			end if;
 		end if;

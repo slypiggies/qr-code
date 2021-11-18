@@ -39,8 +39,8 @@ architecture main_a of main is
 	
 	constant ADDR_DEPTH: natural := natural(ceil(log2(real(H * V))));
 	
-	signal BTNC2: std_logic;
-	signal clk50, clk25: std_logic;
+	signal BTNC_2: std_logic;
+	signal clk25, clk1400ns: std_logic;
 	signal we: std_logic_vector(0 downto 0);
 	signal addr_w, addr_r: std_logic_vector(ADDR_DEPTH - 1 downto 0);
 	signal pixel_w, pixel_r: std_logic_vector(11 downto 0);
@@ -52,17 +52,20 @@ architecture main_a of main is
 			o: out std_logic
 		);
 	end component;
-	component clk_wizard is
+	component clk_divider is
+		generic (
+			divider: positive
+		);
 		port (
 			reset: in std_logic;
-			CLK100: in std_logic;
-			clk50, clk25: out std_logic
+			i: in std_logic;
+			o: out std_logic
 		);
 	end component;
 	component ov_controller is
 		port (
 			reset: in std_logic;
-			clk25, clk50: in std_logic;
+			CLK100, clk25, clk1400ns: in std_logic;
 			OV_SIOC: out std_logic;
 			OV_SIOD: inout std_logic;
 			OV_PWDN: out std_logic;
@@ -118,19 +121,29 @@ architecture main_a of main is
 		);
 	end component;
 begin
-	debouncer_i: debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC2);
+	debouncer_i: debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC_2);
 	
-	clk_wizard_i: clk_wizard port map (
-		reset => BTNC2,
-		CLK100 => CLK100,
-		clk50 => clk50,
-		clk25 => clk25
+	clk_divider_25_i: clk_divider generic map (
+		divider => 4
+	) port map (
+		reset => BTNC_2,
+		i => CLK100,
+		o => clk25
+	);
+	
+	clk_divider_1400ns_i: clk_divider generic map (
+		divider => 140
+	) port map (
+		reset => BTNC_2,
+		i => CLK100,
+		o => clk1400ns
 	);
 	
 	ov_controller_i: ov_controller port map (
-		reset => BTNC2,
+		reset => BTNC_2,
+		CLK100 => CLK100,
 		clk25 => clk25,
-		clk50 => clk50,
+		clk1400ns => clk1400ns,
 		OV_SIOC => OV_SIOC,
 		OV_SIOD => OV_SIOD,
 		OV_PWDN => OV_PWDN,
@@ -141,7 +154,7 @@ begin
 	ov_capturer_rgb565_i: ov_capturer_rgb565 generic map (
 		ADDR_DEPTH => ADDR_DEPTH
 	) port map (
-		reset => BTNC2,
+		reset => BTNC_2,
 		OV_PCLK => OV_PCLK,
 		OV_HREF => OV_HREF,
 		OV_VSYNC => OV_VSYNC,
@@ -174,7 +187,7 @@ begin
 		V_POLARITY => V_POLARITY,
 		ADDR_DEPTH => ADDR_DEPTH
 	) port map (
-		reset => BTNC2,
+		reset => BTNC_2,
 		clk25 => clk25,
 		VGA_R => VGA_R,
 		VGA_G => VGA_G,
