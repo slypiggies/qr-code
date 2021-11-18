@@ -1,0 +1,9 @@
+# compile vhdl design source files
+vhdl2008 xil_defaultlib  \
+"../../../../fyp.srcs/sources_1/new/ov_i2c.vhd" \
+
+vhdl xil_defaultlib  \
+"../../../../fyp.srcs/sim_1/new/a.vhd" \
+
+# Do not sort compile order
+nosort

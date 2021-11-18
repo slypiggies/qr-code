@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Sun Nov  7 23:51:17 2021
+| Date         : Thu Nov 18 21:45:03 2021
 | Host         : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
 | Command      : report_utilization -file main_utilization_synth.rpt -pb main_utilization_synth.pb
 | Design       : main
@@ -30,11 +30,11 @@ Table of Contents
 +-------------------------+------+-------+-----------+-------+
 |        Site Type        | Used | Fixed | Available | Util% |
 +-------------------------+------+-------+-----------+-------+
-| Slice LUTs*             |  115 |     0 |     53200 |  0.22 |
-|   LUT as Logic          |  115 |     0 |     53200 |  0.22 |
+| Slice LUTs*             |  139 |     0 |     53200 |  0.26 |
+|   LUT as Logic          |  139 |     0 |     53200 |  0.26 |
 |   LUT as Memory         |    0 |     0 |     17400 |  0.00 |
-| Slice Registers         |  184 |     0 |    106400 |  0.17 |
-|   Register as Flip Flop |  184 |     0 |    106400 |  0.17 |
+| Slice Registers         |  161 |     0 |    106400 |  0.15 |
+|   Register as Flip Flop |  161 |     0 |    106400 |  0.15 |
 |   Register as Latch     |    0 |     0 |    106400 |  0.00 |
 | F7 Muxes                |    0 |     0 |     26600 |  0.00 |
 | F8 Muxes                |    0 |     0 |     13300 |  0.00 |
@@ -54,10 +54,10 @@ Table of Contents
 | 0     |            _ |         Set |            - |
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
-| 33    |          Yes |           - |          Set |
-| 106   |          Yes |           - |        Reset |
-| 1     |          Yes |         Set |            - |
-| 44    |          Yes |       Reset |            - |
+| 3     |          Yes |           - |          Set |
+| 91    |          Yes |           - |        Reset |
+| 0     |          Yes |         Set |            - |
+| 67    |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -114,7 +114,7 @@ Table of Contents
 +------------+------+-------+-----------+-------+
 |  Site Type | Used | Fixed | Available | Util% |
 +------------+------+-------+-----------+-------+
-| BUFGCTRL   |    1 |     0 |        32 |  3.13 |
+| BUFGCTRL   |    2 |     0 |        32 |  6.25 |
 | BUFIO      |    0 |     0 |        16 |  0.00 |
 | MMCME2_ADV |    0 |     0 |         4 |  0.00 |
 | PLLE2_ADV  |    0 |     0 |         4 |  0.00 |
@@ -147,22 +147,21 @@ Table of Contents
 +----------+------+---------------------+
 | Ref Name | Used | Functional Category |
 +----------+------+---------------------+
-| FDCE     |  106 |        Flop & Latch |
-| LUT3     |   57 |                 LUT |
-| LUT2     |   47 |                 LUT |
-| FDRE     |   44 |        Flop & Latch |
-| FDPE     |   33 |        Flop & Latch |
-| LUT4     |   21 |                 LUT |
+| FDCE     |   91 |        Flop & Latch |
+| LUT6     |   86 |                 LUT |
+| FDRE     |   67 |        Flop & Latch |
+| LUT5     |   29 |                 LUT |
 | OBUF     |   18 |                  IO |
-| LUT6     |   18 |                 LUT |
-| LUT5     |   15 |                 LUT |
+| LUT4     |   16 |                 LUT |
+| LUT2     |   15 |                 LUT |
+| IBUF     |   14 |                  IO |
 | CARRY4   |   14 |          CarryLogic |
-| IBUF     |   13 |                  IO |
 | OBUFT    |    9 |                  IO |
-| LUT1     |    8 |                 LUT |
+| LUT3     |    9 |                 LUT |
+| LUT1     |    9 |                 LUT |
+| FDPE     |    3 |        Flop & Latch |
+| BUFG     |    2 |               Clock |
 | RAMB18E1 |    1 |        Block Memory |
-| FDSE     |    1 |        Flop & Latch |
-| BUFG     |    1 |               Clock |
 +----------+------+---------------------+
 
 
@@ -173,7 +172,6 @@ Table of Contents
 |   Ref Name   | Used |
 +--------------+------+
 | frame_buffer |    1 |
-| clk_wizard   |    1 |
 +--------------+------+
 
 

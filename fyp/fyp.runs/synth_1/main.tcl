@@ -79,7 +79,7 @@ set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
 set_property webtalk.parent_dir C:/Data/FYP/fyp/fyp.cache/wt [current_project]
 set_property parent.project_path C:/Data/FYP/fyp/fyp.xpr [current_project]
-set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+set_property XPM_LIBRARIES XPM_MEMORY [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
 set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
@@ -88,21 +88,17 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -vhdl2008 -library xil_defaultlib {
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/clk_divider.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/debouncer.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_capturer_rgb565.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_controller.vhd
-  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_i2c.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_register.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_sccb.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/vga.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/main.vhd
 }
 read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
 set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer/frame_buffer_ooc.xdc]
-
-read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/clk_wizard/clk_wizard.xci
-set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_board.xdc]
-set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard.xdc]
-set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/clk_wizard/clk_wizard_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -122,7 +118,7 @@ set_param ips.enableIPCacheLiteLoad 1
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
-synth_design -top main -part xc7z020clg484-1
+synth_design -top main -part xc7z020clg484-1 -flatten_hierarchy none -directive RuntimeOptimized -fsm_extraction off
 OPTRACE "synth_design" END { }
 if { [get_msg_config -count -severity {CRITICAL WARNING}] > 0 } {
  send_msg_id runtcl-6 info "Synthesis results are not added to the cache due to CRITICAL_WARNING"

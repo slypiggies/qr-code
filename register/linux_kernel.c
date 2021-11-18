@@ -291,7 +291,7 @@ void print_uchar(unsigned char x) {
 }
 
 void print_regval_list(struct regval_list x) {
-	printf("x\"");
+	printf("X\"");
 	print_uchar(x.reg_num);
 	print_uchar(x.value);
 	printf("\",\n");
