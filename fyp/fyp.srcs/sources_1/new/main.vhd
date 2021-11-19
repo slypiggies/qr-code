@@ -162,19 +162,11 @@ begin
 	
 	clk_divider_25_i: clk_divider generic map (
 		divider => 4
-	) port map (
-		reset => BTNC_2,
-		i => CLK100,
-		o => clk25
-	);
+	) port map (reset => BTNC_2, i => CLK100, o => clk25);
 	
 	clk_divider_1400ns_i: clk_divider generic map (
 		divider => 140
-	) port map (
-		reset => BTNC_2,
-		i => CLK100,
-		o => clk1400ns
-	);
+	) port map (reset => BTNC_2, i => CLK100, o => clk1400ns);
 	
 	ov_controller_i: ov_controller generic map (
 		OV_ADDR => OV_ADDR,
