@@ -19,7 +19,7 @@ entity ov_sccb is
 end entity;
 
 architecture ov_sccb_a of ov_sccb is
-	signal tx_ed_2, sda_2, t_2: std_logic;
+	signal tx_ed_2, sda_2, o, t_2: std_logic;
 	signal d_2: std_logic_vector(23 downto 0);
 	type state_t is (Q_0, Q_1, Q_2, Q_3, Q_D, Q_4, Q_5, Q_6);
 	signal state: state_t;
@@ -29,7 +29,7 @@ architecture ov_sccb_a of ov_sccb is
 begin
 	iobuf_i: iobuf port map (
 		i => sda_2,
---		o => ,
+		o => o,
 		io => sda,
 		t => t_2
 	);
@@ -42,8 +42,8 @@ begin
 			tx_ed_2 <= '0';
 			state <= Q_0;
 			clk_cnt <= "00";
-			bit_cnt <= x"0";
-			byte_cnt <= x"0";
+			bit_cnt <= X"0";
+			byte_cnt <= X"0";
 			clk1400ns_prev <= '0';
 			scl <= '1';
 			sda_2 <= '1';
@@ -75,17 +75,17 @@ begin
 					scl <= '0';
 					sda_2 <= d_2(d_2'left);
 					d_2 <= d_2(d_2'left - 1 downto 0) & '0';
-					bit_cnt <= x"0";
-					byte_cnt <= x"0";
+					bit_cnt <= X"0";
+					byte_cnt <= X"0";
 				elsif state = Q_D then
 					if clk_cnt = "00" or clk_cnt = "01" then
 						scl <= '1';
 					elsif clk_cnt = "10" then
 						scl <= '0';
 					else
-						if byte_cnt < x"2" or bit_cnt < x"8" then
+						if byte_cnt < X"2" or bit_cnt < X"8" then
 							scl <= '0';
-							if bit_cnt /= x"7" then
+							if bit_cnt /= X"7" then
 								sda_2 <= d_2(d_2'left);
 								d_2 <= d_2(d_2'left - 1 downto 0) & '0';
 							else
@@ -97,14 +97,14 @@ begin
 							sda_2 <= '0';
 						end if;
 						
-						if bit_cnt < x"8" then
+						if bit_cnt < X"8" then
 							bit_cnt <= bit_cnt + 1;
 						else
-							bit_cnt <= x"0";
-							if byte_cnt < x"2" then
+							bit_cnt <= X"0";
+							if byte_cnt < X"2" then
 								byte_cnt <= byte_cnt + 1;
 							else
-								byte_cnt <= x"0";
+								byte_cnt <= X"0";
 							end if;
 						end if;
 					end if;

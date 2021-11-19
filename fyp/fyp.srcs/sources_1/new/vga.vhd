@@ -16,7 +16,9 @@ entity vga is
 		V_BACK_PORCH: natural;
 		V_POLARITY: std_logic;
 		
-		ADDR_DEPTH: natural
+		ADDR_DEPTH: natural;
+		USE_RGB565: boolean;
+		PIXEL_LENGTH: natural
 	);
 	port (
 		reset: in std_logic;
@@ -24,7 +26,7 @@ entity vga is
 		VGA_R, VGA_G, VGA_B: out std_logic_vector(3 downto 0);
 		VGA_HS, VGA_VS: out std_logic;
 		addr: out std_logic_vector(ADDR_DEPTH - 1 downto 0);
-		pixel: in std_logic_vector(11 downto 0)
+		pixel: in std_logic_vector(PIXEL_LENGTH - 1 downto 0)
 	);
 end entity;
 

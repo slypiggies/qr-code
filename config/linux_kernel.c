@@ -270,6 +270,22 @@ static struct regval_list ov7670_default_regs[] = {
 	// { 0xff, 0xff },	/* END MARKER */
 };
 
+static struct regval_list ov7670_fmt_yuv422[] = {
+	{ REG_COM7, 0x0 },  /* Selects YUV mode */
+	{ REG_RGB444, 0 },	/* No RGB444 please */
+	{ REG_COM1, 0 },	/* CCIR601 */
+	{ REG_COM15, COM15_R00FF },
+	{ REG_COM9, 0x48 }, /* 32x gain ceiling; 0x8 is reserved bit */
+	{ 0x4f, 0x80 },		/* "matrix coefficient 1" */
+	{ 0x50, 0x80 },		/* "matrix coefficient 2" */
+	{ 0x51, 0    },		/* vb */
+	{ 0x52, 0x22 },		/* "matrix coefficient 4" */
+	{ 0x53, 0x5e },		/* "matrix coefficient 5" */
+	{ 0x54, 0x80 },		/* "matrix coefficient 6" */
+	{ REG_COM13, COM13_GAMMA|COM13_UVSAT },
+	// { 0xff, 0xff },
+};
+
 static struct regval_list ov7670_fmt_rgb565[] = {
 	{ REG_COM7, COM7_RGB },	/* Selects RGB mode */
 	{ REG_RGB444, 0 },	/* No RGB444 please */
@@ -298,11 +314,23 @@ void print_regval_list(struct regval_list x) {
 }
 
 int main() {
-	printf("%u\n", sizeof ov7670_default_regs / sizeof(struct regval_list) + sizeof ov7670_fmt_rgb565 / sizeof(struct regval_list));
-	for (size_t i = 0; i < sizeof ov7670_default_regs / sizeof(struct regval_list); i++) {
+	size_t z = sizeof ov7670_default_regs / sizeof(struct regval_list);
+	size_t x = sizeof ov7670_fmt_rgb565 / sizeof(struct regval_list);
+	size_t y = sizeof ov7670_fmt_yuv422 / sizeof(struct regval_list);
+	
+	printf("%u\n", z + x);
+	for (size_t i = 0; i < z; i++) {
 		print_regval_list(ov7670_default_regs[i]);
 	}
-	for (size_t i = 0; i < sizeof ov7670_fmt_rgb565 / sizeof(struct regval_list); i++) {
+	for (size_t i = 0; i < x; i++) {
 		print_regval_list(ov7670_fmt_rgb565[i]);
 	}
+	
+	// printf("%u\n", z + y);
+	// for (size_t i = 0; i < z; i++) {
+	// 	print_regval_list(ov7670_default_regs[i]);
+	// }
+	// for (size_t i = 0; i < y; i++) {
+	// 	print_regval_list(ov7670_fmt_yuv422[i]);
+	// }
 }

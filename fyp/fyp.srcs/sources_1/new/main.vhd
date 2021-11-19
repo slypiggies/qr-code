@@ -25,6 +25,20 @@ entity main is
 end entity;
 
 architecture main_a of main is
+--	constant USE_RGB565: boolean := true;
+--	constant PIXEL_LENGTH: natural := 12;
+--	constant NO_CONFIG: boolean := false;
+	
+--	constant USE_RGB565: boolean := false;
+--	constant PIXEL_LENGTH: natural := 4;
+--	constant NO_CONFIG: boolean := true;
+	
+	constant USE_RGB565: boolean := false;
+	constant PIXEL_LENGTH: natural := 4;
+	constant NO_CONFIG: boolean := false;
+	
+	constant OV_ADDR: std_logic_vector(7 downto 0) := X"42";
+
 	constant H: natural := 640;
 	constant H_FRONT_PORCH: natural := 16;
 	constant H_SYNC_PULSE: natural := 96;
@@ -43,7 +57,7 @@ architecture main_a of main is
 	signal clk25, clk1400ns: std_logic;
 	signal we: std_logic_vector(0 downto 0);
 	signal addr_w, addr_r: std_logic_vector(ADDR_DEPTH - 1 downto 0);
-	signal pixel_w, pixel_r: std_logic_vector(11 downto 0);
+	signal pixel_w, pixel_r: std_logic_vector(PIXEL_LENGTH - 1 downto 0);
 	
 	component debouncer is
 		port (
@@ -63,6 +77,11 @@ architecture main_a of main is
 		);
 	end component;
 	component ov_controller is
+		generic (
+			OV_ADDR: std_logic_vector(7 downto 0);
+			USE_RGB565: boolean;
+			NO_CONFIG: boolean
+		);
 		port (
 			reset: in std_logic;
 			CLK100, clk25, clk1400ns: in std_logic;
@@ -73,9 +92,12 @@ architecture main_a of main is
 			OV_XCLK: out std_logic
 		);
 	end component;
-	component ov_capturer_rgb565 is
+	component ov_capturer is
 		generic (
-			ADDR_DEPTH: natural
+			ADDR_DEPTH: natural;
+			USE_RGB565: boolean;
+			PIXEL_LENGTH: natural;
+			NO_CONFIG: boolean
 		);
 		port (
 			reset: in std_logic;
@@ -83,16 +105,29 @@ architecture main_a of main is
 			OV_D: in std_logic_vector(7 downto 0);
 			we: out std_logic;
 			addr: out std_logic_vector(ADDR_DEPTH - 1 downto 0);
-			pixel: out std_logic_vector(11 downto 0)
+			pixel: out std_logic_vector(PIXEL_LENGTH - 1 downto 0)
 		);
 	end component;
-	component frame_buffer is
+	component frame_buffer_rgb565 is
 		port (
-			addra, addrb: in std_logic_vector(ADDR_DEPTH - 1 downto 0);
-			clka, clkb: in std_logic;
-			dina: in std_logic_vector(11 downto 0);
+			clka: in std_logic;
 			wea: in std_logic_vector(0 downto 0);
+			addra: in std_logic_vector(ADDR_DEPTH - 1 downto 0);
+			dina: in std_logic_vector(11 downto 0);
+			clkb: in std_logic;
+			addrb: in std_logic_vector(ADDR_DEPTH - 1 downto 0);
 			doutb: out std_logic_vector(11 downto 0)
+		);
+	end component;
+	component frame_buffer_y is
+		port (
+			clka: in std_logic;
+			wea: in std_logic_vector(0 downto 0);
+			addra: in std_logic_vector(ADDR_DEPTH - 1 downto 0);
+			dina: in std_logic_vector(3 downto 0);
+			clkb: in std_logic;
+			addrb: in std_logic_vector(ADDR_DEPTH - 1 downto 0);
+			doutb: out std_logic_vector(3 downto 0)
 		);
 	end component;
 	component vga is
@@ -109,7 +144,9 @@ architecture main_a of main is
 			V_BACK_PORCH: natural;
 			V_POLARITY: std_logic;
 			
-			ADDR_DEPTH: natural
+			ADDR_DEPTH: natural;
+			USE_RGB565: boolean;
+			PIXEL_LENGTH: natural
 		);
 		port (
 			reset: in std_logic;
@@ -117,7 +154,7 @@ architecture main_a of main is
 			VGA_R, VGA_G, VGA_B: out std_logic_vector(3 downto 0);
 			VGA_HS, VGA_VS: out std_logic;
 			addr: out std_logic_vector(ADDR_DEPTH - 1 downto 0);
-			pixel: in std_logic_vector(11 downto 0)
+			pixel: in std_logic_vector(PIXEL_LENGTH - 1 downto 0)
 		);
 	end component;
 begin
@@ -139,7 +176,11 @@ begin
 		o => clk1400ns
 	);
 	
-	ov_controller_i: ov_controller port map (
+	ov_controller_i: ov_controller generic map (
+		OV_ADDR => OV_ADDR,
+		USE_RGB565 => USE_RGB565,
+		NO_CONFIG => NO_CONFIG
+	) port map (
 		reset => BTNC_2,
 		CLK100 => CLK100,
 		clk25 => clk25,
@@ -151,8 +192,11 @@ begin
 		OV_XCLK => OV_XCLK
 	);
 	
-	ov_capturer_rgb565_i: ov_capturer_rgb565 generic map (
-		ADDR_DEPTH => ADDR_DEPTH
+	ov_capturer_i: ov_capturer generic map (
+		ADDR_DEPTH => ADDR_DEPTH,
+		USE_RGB565 => USE_RGB565,
+		PIXEL_LENGTH => PIXEL_LENGTH,
+		NO_CONFIG => NO_CONFIG
 	) port map (
 		reset => BTNC_2,
 		OV_PCLK => OV_PCLK,
@@ -164,15 +208,28 @@ begin
 		pixel => pixel_w
 	);
 	
-	frame_buffer_i: frame_buffer port map (
-		addra => addr_w,
-		clka => OV_PCLK,
-		dina => pixel_w,
-		wea => we,
-		addrb => addr_r,
-		clkb => clk25,
-		doutb => pixel_r
-	);
+	USE_RGB565_if: if USE_RGB565 generate
+		frame_buffer_rgb565_i: frame_buffer_rgb565 port map (
+			clka => OV_PCLK,
+			wea => we,
+			addra => addr_w,
+			dina => pixel_w,
+			clkb => clk25,
+			addrb => addr_r,
+			doutb => pixel_r
+		);
+	end generate;
+	not_USE_RGB565_if: if not USE_RGB565 generate
+		frame_buffer_y_i: frame_buffer_y port map (
+			clka => OV_PCLK,
+			wea => we,
+			addra => addr_w,
+			dina => pixel_w,
+			clkb => clk25,
+			addrb => addr_r,
+			doutb => pixel_r
+		);
+	end generate;
 	
 	vga_i: vga generic map (
 		H => H,
@@ -185,7 +242,9 @@ begin
 		V_SYNC_PULSE => V_SYNC_PULSE,
 		V_BACK_PORCH => V_BACK_PORCH,
 		V_POLARITY => V_POLARITY,
-		ADDR_DEPTH => ADDR_DEPTH
+		ADDR_DEPTH => ADDR_DEPTH,
+		USE_RGB565 => USE_RGB565,
+		PIXEL_LENGTH => PIXEL_LENGTH
 	) port map (
 		reset => BTNC_2,
 		clk25 => clk25,
