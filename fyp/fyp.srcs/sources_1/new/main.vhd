@@ -46,12 +46,12 @@ architecture main_a of main is
 	constant H_POLARITY: std_logic := '0';
 	
 	constant V: natural := 480;
-	constant V_FRONT_PORCH: natural := 11;
+	constant V_FRONT_PORCH: natural := 10;
 	constant V_SYNC_PULSE: natural := 2;
-	constant V_BACK_PORCH: natural := 31;
-	constant V_POLARITY: std_logic := '1';
+	constant V_BACK_PORCH: natural := 33;
+	constant V_POLARITY: std_logic := '0';
 	
-	constant ADDR_DEPTH: natural := natural(ceil(log2(real(H * V))));
+	constant ADDR_DEPTH: natural := natural(floor(log2(real(H * V)))) + 1;
 	
 	signal BTNC_2: std_logic;
 	signal clk25, clk1400ns: std_logic;
