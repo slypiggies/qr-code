@@ -123,6 +123,7 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 1
+  set_param xicom.use_bs_reader 1
 OPTRACE "create in-memory project" START { }
   create_project -in_memory -part xc7z020clg484-1
   set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
@@ -138,7 +139,8 @@ OPTRACE "set parameters" START { }
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
   add_files -quiet C:/Data/FYP/fyp/fyp.runs/synth_1/main.dcp
-  read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
+  read_ip -quiet c:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer_rgb565/frame_buffer_rgb565.xci
+  read_ip -quiet c:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer_y/frame_buffer_y.xci
 OPTRACE "read constraints: implementation" START { }
   read_xdc C:/Data/FYP/fyp/fyp.srcs/constrs_1/new/zedboard_mzedboard_master_XDC_RevC_D_v3aster_XDC_RevC_D_v3.xdc
 OPTRACE "read constraints: implementation" END { }

@@ -1,0 +1,6 @@
+verilog xil_defaultlib  \
+"../../../../fyp.gen/sources_1/ip/frame_buffer_y/sim/frame_buffer_y.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+nosort

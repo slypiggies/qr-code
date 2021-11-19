@@ -70,6 +70,8 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 1
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg484-1
 
@@ -90,15 +92,18 @@ OPTRACE "Adding files" START { }
 read_vhdl -vhdl2008 -library xil_defaultlib {
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/clk_divider.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/debouncer.vhd
-  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_capturer_rgb565.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_capturer.vhd
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_config.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_controller.vhd
-  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_register.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_sccb.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/vga.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/main.vhd
 }
-read_ip -quiet C:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer/frame_buffer.xci
-set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer/frame_buffer_ooc.xdc]
+read_ip -quiet c:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer_rgb565/frame_buffer_rgb565.xci
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer_rgb565/frame_buffer_rgb565_ooc.xdc]
+
+read_ip -quiet c:/Data/FYP/fyp/fyp.srcs/sources_1/ip/frame_buffer_y/frame_buffer_y.xci
+set_property used_in_implementation false [get_files -all c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer_y/frame_buffer_y_ooc.xdc]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
