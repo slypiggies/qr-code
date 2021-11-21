@@ -1,7 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-
 library unisim;
 use unisim.vcomponents.all;
 
@@ -33,7 +32,6 @@ begin
 		io => sda,
 		t => t_2
 	);
-
 	tx_ed <= tx_ed_2;
 	
 	process (all) begin
