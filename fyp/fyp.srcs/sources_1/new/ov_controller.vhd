@@ -49,7 +49,7 @@ architecture ov_controller_a of ov_controller is
 	signal tx_ed, en: std_logic;
 	signal config: std_logic_vector(15 downto 0);
 begin
-	OV_PWDN <= '0';
+	OV_PWDN <= reset;
 	OV_RESET <= not reset;
 	OV_XCLK <= clk25;
 	
