@@ -1,0 +1,7 @@
+# compile vhdl design source files
+vhdl2008 xil_defaultlib  \
+"../../../../fyp.srcs/sources_1/new/sqrt_2.vhd" \
+"../../../../fyp.srcs/sim_1/new/sqrt_2_tb.vhd" \
+
+# Do not sort compile order
+nosort
