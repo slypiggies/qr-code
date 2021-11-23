@@ -27,6 +27,9 @@ entity fyp is
 end entity;
 
 architecture fyp_a of fyp is
+--	constant ENABLE_PROCESSING: boolean := false;
+	constant ENABLE_PROCESSING: boolean := true;
+	
 --	constant USE_RGB565: boolean := true;
 --	constant PIXEL_LENGTH: natural := 12;
 --	constant NO_CONFIG: boolean := false;
@@ -53,13 +56,13 @@ architecture fyp_a of fyp is
 	constant V_BACK_PORCH: natural := 33;
 	constant V_POLARITY: std_logic := '0';
 	
-	constant ADDR_DEPTH: natural := natural(floor(log2(real(H * V)))) + 1;
+	constant ADDR_LENGTH: natural := natural(floor(log2(real(H * V)))) + 1;
 	
 	signal BTNC_2: std_logic;
 	signal clk25, clk1400ns: std_logic;
-	signal we: std_logic_vector(0 downto 0);
-	signal addr_w, addr_r: std_logic_vector(ADDR_DEPTH - 1 downto 0);
-	signal pixel_w, pixel_r: std_logic_vector(PIXEL_LENGTH - 1 downto 0);
+	signal we, we_2: std_logic;
+	signal addr_w, addr_r, addr_w_2, addr_r_2: unsigned(ADDR_LENGTH - 1 downto 0);
+	signal pixel_w, pixel_r, pixel_w_2, pixel_r_2: unsigned(PIXEL_LENGTH - 1 downto 0);
 	
 	COMPONENT frame_buffer_rgb565
 	  PORT (
@@ -89,7 +92,6 @@ begin
 	clk_divider_25_i: entity clk_divider generic map (
 		divider => 4
 	) port map (reset => BTNC_2, i => CLK100, o => clk25);
-	
 	clk_divider_1400ns_i: entity clk_divider generic map (
 		divider => 140
 	) port map (reset => BTNC_2, i => CLK100, o => clk1400ns);
@@ -111,7 +113,7 @@ begin
 	);
 	
 	ov_capturer_i: entity ov_capturer generic map (
-		ADDR_DEPTH => ADDR_DEPTH,
+		ADDR_LENGTH => ADDR_LENGTH,
 		USE_RGB565 => USE_RGB565,
 		PIXEL_LENGTH => PIXEL_LENGTH,
 		NO_CONFIG => NO_CONFIG
@@ -121,32 +123,71 @@ begin
 		OV_HREF => OV_HREF,
 		OV_VSYNC => OV_VSYNC,
 		OV_D => OV_D,
-		we => we(0),
+		we => we,
 		addr => addr_w,
 		pixel => pixel_w
 	);
 	
-	USE_RGB565_if: if USE_RGB565 generate
-		frame_buffer_rgb565_i: frame_buffer_rgb565 port map (
-			clka => OV_PCLK,
-			wea => we,
-			addra => addr_w,
-			dina => pixel_w,
-			clkb => clk25,
-			addrb => addr_r,
-			doutb => pixel_r
-		);
-	end generate;
-	not_USE_RGB565_if: if not USE_RGB565 generate
+	ENABLE_PROCESSING_if: if ENABLE_PROCESSING generate
 		frame_buffer_y_i: frame_buffer_y port map (
 			clka => OV_PCLK,
-			wea => we,
-			addra => addr_w,
-			dina => pixel_w,
-			clkb => clk25,
-			addrb => addr_r,
-			doutb => pixel_r
+			wea(0) => we,
+			addra => std_logic_vector(addr_w),
+			dina => std_logic_vector(pixel_w),
+			clkb => CLK100,
+			addrb => std_logic_vector(addr_r_2),
+			unsigned(doutb) => pixel_r_2
 		);
+		
+		sobel_i: entity sobel generic map (
+			H => H,
+			V => V,
+			ADDR_LENGTH => ADDR_LENGTH,
+			PIXEL_LENGTH => PIXEL_LENGTH
+		) port map (
+			reset => BTNC_2,
+			CLK100 => CLK100,
+			addr_r => addr_r_2,
+			addr_w => addr_w_2,
+			pixel_r => pixel_r_2,
+			pixel_w => pixel_w_2,
+			we => we_2
+		);
+		
+		frame_buffer_y_sobel_i: frame_buffer_y port map (
+			clka => CLK100,
+			wea(0) => we_2,
+			addra => std_logic_vector(addr_w_2),
+			dina => std_logic_vector(pixel_w_2),
+			clkb => clk25,
+			addrb => std_logic_vector(addr_r),
+			unsigned(doutb) => pixel_r
+		);
+	end generate;
+	
+	not_ENABLE_PROCESSING_if: if not ENABLE_PROCESSING generate
+		USE_RGB565_if: if USE_RGB565 generate
+			frame_buffer_rgb565_i: frame_buffer_rgb565 port map (
+				clka => OV_PCLK,
+				wea(0) => we,
+				addra => std_logic_vector(addr_w),
+				dina => std_logic_vector(pixel_w),
+				clkb => clk25,
+				addrb => std_logic_vector(addr_r),
+				unsigned(doutb) => pixel_r
+			);
+		end generate;
+		not_USE_RGB565_if: if not USE_RGB565 generate
+			frame_buffer_y_i: frame_buffer_y port map (
+				clka => OV_PCLK,
+				wea(0) => we,
+				addra => std_logic_vector(addr_w),
+				dina => std_logic_vector(pixel_w),
+				clkb => clk25,
+				addrb => std_logic_vector(addr_r),
+				unsigned(doutb) => pixel_r
+			);
+		end generate;
 	end generate;
 	
 	vga_i: entity vga generic map (
@@ -160,7 +201,7 @@ begin
 		V_SYNC_PULSE => V_SYNC_PULSE,
 		V_BACK_PORCH => V_BACK_PORCH,
 		V_POLARITY => V_POLARITY,
-		ADDR_DEPTH => ADDR_DEPTH,
+		ADDR_LENGTH => ADDR_LENGTH,
 		USE_RGB565 => USE_RGB565,
 		PIXEL_LENGTH => PIXEL_LENGTH
 	) port map (
