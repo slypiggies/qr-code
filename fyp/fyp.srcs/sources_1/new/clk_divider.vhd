@@ -16,7 +16,7 @@ end entity;
 
 architecture clk_divider_a of clk_divider is
 	constant N: natural := divider / 2;
-	signal cnt: unsigned(natural(floor(log2(real(N)))) downto 0);
+	signal cnt: unsigned(natural(floor(log2(real(N)))) + 1 - 1 downto 0);
 	signal o_2: std_logic;
 begin
 	o <= o_2;

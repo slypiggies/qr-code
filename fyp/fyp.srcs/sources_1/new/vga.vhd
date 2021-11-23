@@ -16,7 +16,7 @@ entity vga is
 		V_BACK_PORCH: natural;
 		V_POLARITY: std_logic;
 		
-		ADDR_DEPTH: natural;
+		ADDR_LENGTH: natural;
 		USE_RGB565: boolean;
 		PIXEL_LENGTH: natural
 	);
@@ -25,16 +25,22 @@ entity vga is
 		clk25: in std_logic;
 		VGA_R, VGA_G, VGA_B: out std_logic_vector(3 downto 0);
 		VGA_HS, VGA_VS: out std_logic;
-		addr: out std_logic_vector(ADDR_DEPTH - 1 downto 0);
-		pixel: in std_logic_vector(PIXEL_LENGTH - 1 downto 0)
+		addr: out unsigned(ADDR_LENGTH - 1 downto 0);
+		pixel: in unsigned(PIXEL_LENGTH - 1 downto 0)
 	);
 end entity;
 
 architecture vga_a of vga is
+	signal VGA_R_2: unsigned(VGA_R'range);
+	signal VGA_G_2: unsigned(VGA_G'range);
+	signal VGA_B_2: unsigned(VGA_B'range);
 	signal addr_2: unsigned(addr'range);
 	signal h_cnt, v_cnt: unsigned(addr'range);
 begin
-	addr <= std_logic_vector(addr_2);
+	VGA_R <= std_logic_vector(VGA_R_2);
+	VGA_G <= std_logic_vector(VGA_G_2);
+	VGA_B <= std_logic_vector(VGA_B_2);
+	addr <= addr_2;
 	process (all) begin
 		if reset = '1' then
 			addr_2 <= (others => '0');
@@ -65,19 +71,19 @@ begin
 			
 			if h_cnt < to_unsigned(H, h_cnt'length) and v_cnt < to_unsigned(V, v_cnt'length) then
 				if USE_RGB565 then
-					VGA_R <= pixel(11 downto 8);
-					VGA_G <= pixel(7 downto 4);
-					VGA_B <= pixel(3 downto 0);
+					VGA_R_2 <= pixel(11 downto 8);
+					VGA_G_2 <= pixel(7 downto 4);
+					VGA_B_2 <= pixel(3 downto 0);
 				else
-					VGA_R <= pixel;
-					VGA_G <= pixel;
-					VGA_B <= pixel;
+					VGA_R_2 <= pixel;
+					VGA_G_2 <= pixel;
+					VGA_B_2 <= pixel;
 				end if;
 				addr_2 <= addr_2 + 1;
 			else
-				VGA_R <= (others => '0');
-				VGA_G <= (others => '0');
-				VGA_B <= (others => '0');
+				VGA_R_2 <= (others => '0');
+				VGA_G_2 <= (others => '0');
+				VGA_B_2 <= (others => '0');
 				if v_cnt = to_unsigned(V, v_cnt'length) then
 					addr_2 <= (others => '0');
 				end if;

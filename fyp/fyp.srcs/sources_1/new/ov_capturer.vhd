@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity ov_capturer is
 	generic (
-		ADDR_DEPTH: natural;
+		ADDR_LENGTH: natural;
 		USE_RGB565: boolean;
 		PIXEL_LENGTH: natural;
 		NO_CONFIG: boolean
@@ -14,22 +14,24 @@ entity ov_capturer is
 		OV_PCLK, OV_HREF, OV_VSYNC: in std_logic;
 		OV_D: in std_logic_vector(7 downto 0);
 		we: out std_logic;
-		addr: out std_logic_vector(ADDR_DEPTH - 1 downto 0);
-		pixel: out std_logic_vector(PIXEL_LENGTH - 1 downto 0)
+		addr: out unsigned(ADDR_LENGTH - 1 downto 0);
+		pixel: out unsigned(PIXEL_LENGTH - 1 downto 0)
 	);
 end entity;
 
 architecture ov_capturer_a of ov_capturer is
 	signal we_2: std_logic;
 	signal addr_2: unsigned(addr'range);
+	signal pixel_2: std_logic_vector(pixel'range);
 	signal shift_reg: std_logic_vector(15 downto 0);
 begin
 	we <= we_2;
-	addr <= std_logic_vector(addr_2);
-	pixel <=
+	addr <= addr_2;
+	pixel_2 <=
 		shift_reg(15 downto 12) & shift_reg(10 downto 7) & shift_reg(4 downto 1) when USE_RGB565
 		else shift_reg(7 downto 4) when NO_CONFIG
 		else shift_reg(15 downto 12);
+	pixel <= unsigned(pixel_2);
 	
 	process (all) begin
 		if reset = '1' or OV_VSYNC = '1' then
