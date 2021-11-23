@@ -5,16 +5,14 @@ library work;
 use work.all;
 
 entity ov_sccb_tb is
-	generic (
-		ADDR: std_logic_vector(7 downto 0);
-		D: std_logic_vector(15 downto 0);
-		EN: std_logic
-	);
 	port (
 		reset, clk100: in std_logic;
+		addr: in std_logic_vector(7 downto 0);
+		d: in std_logic_vector(15 downto 0);
 		scl: out std_logic;
 		sda: inout std_logic;
-		tx_ed: out std_logic
+		tx_ed: out std_logic;
+		en: in std_logic
 	);
 end entity;
 
@@ -29,11 +27,11 @@ begin
 		reset => reset,
 		CLK100 => clk100,
 		clk1400ns => clk1400ns,
-		addr => ADDR,
-		d => D,
+		addr => addr,
+		d => d,
 		scl => scl,
 		sda => sda,
 		tx_ed => tx_ed,
-		en => EN
+		en => en
 	);
 end architecture;

@@ -8,12 +8,12 @@ entity kernel3_tb is
 	generic (
 		H, V: natural;
 		ADDR_LENGTH: natural;
-		PIXEL_LENGTH: natural;
-		PIXEL_R: unsigned(PIXEL_LENGTH - 1 downto 0)
+		PIXEL_LENGTH: natural
 	);
 	port (
 		reset, clk100: in std_logic;
 		addr_r, addr_w: out unsigned(ADDR_LENGTH - 1 downto 0);
+		pixel_r: in unsigned(PIXEL_LENGTH - 1 downto 0);
 		pixel_w: out unsigned(PIXEL_LENGTH - 1 downto 0);
 		we: out std_logic
 	);
@@ -46,7 +46,7 @@ begin
 	) port map (
 		CLK100 => clk100,
 		state => state,
-		pixel_r => PIXEL_R,
+		pixel_r => pixel_r,
 		pixel_w => pixel_w
 	);
 end architecture;

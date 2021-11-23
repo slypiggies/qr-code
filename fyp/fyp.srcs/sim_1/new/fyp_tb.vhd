@@ -44,16 +44,15 @@ begin
 	end process;
 	
 	ENABLE_OV_SCCB_TB_if: if ENABLE_OV_SCCB_TB generate
-		ov_sccb_tb_i: entity ov_sccb_tb generic map (
-			ADDR => ADDR,
-			D => D,
-			EN => EN
-		) port map (
+		ov_sccb_tb_i: entity ov_sccb_tb port map (
 			reset => reset,
 			clk100 => clk100,
+			addr => ADDR,
+			d => D,
 			scl => scl,
 			sda => sda,
-			tx_ed => tx_ed
+			tx_ed => tx_ed,
+			en => EN
 		);
 	end generate;
 	
@@ -62,13 +61,13 @@ begin
 			H => H,
 			V => V,
 			ADDR_LENGTH => ADDR_LENGTH,
-			PIXEL_LENGTH => PIXEL_LENGTH,
-			PIXEL_R => PIXEL_R
+			PIXEL_LENGTH => PIXEL_LENGTH
 		) port map (
 			reset => reset,
 			clk100 => clk100,
 			addr_r => addr_r,
 			addr_w => addr_w,
+			pixel_r => PIXEL_R,
 			pixel_w => pixel_w,
 			we => we
 		);
