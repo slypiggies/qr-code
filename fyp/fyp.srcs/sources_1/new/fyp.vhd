@@ -90,10 +90,10 @@ begin
 	debouncer_i: entity debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC_2);
 	
 	clk_divider_25_i: entity clk_divider generic map (
-		divider => 4
+		DIVIDER => 4
 	) port map (reset => BTNC_2, i => CLK100, o => clk25);
 	clk_divider_1400ns_i: entity clk_divider generic map (
-		divider => 140
+		DIVIDER => 140
 	) port map (reset => BTNC_2, i => CLK100, o => clk1400ns);
 	
 	ov_controller_i: entity ov_controller generic map (

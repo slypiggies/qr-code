@@ -5,7 +5,7 @@ use ieee.math_real.all;
 
 entity clk_divider is
 	generic (
-		divider: positive
+		DIVIDER: positive
 	);
 	port (
 		reset: in std_logic;
@@ -15,7 +15,7 @@ entity clk_divider is
 end entity;
 
 architecture clk_divider_a of clk_divider is
-	constant N: natural := divider / 2;
+	constant N: natural := DIVIDER / 2;
 	signal cnt: unsigned(natural(floor(log2(real(N)))) + 1 - 1 downto 0);
 	signal o_2: std_logic;
 begin
