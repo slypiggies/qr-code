@@ -12,7 +12,7 @@ entity ov_controller is
 	);
 	port (
 		reset: in std_logic;
-		CLK100, clk25, clk1400ns: in std_logic;
+		CLK100, clk25: in std_logic;
 		OV_SIOC: out std_logic;
 		OV_SIOD: inout std_logic;
 		OV_PWDN: out std_logic;
@@ -22,12 +22,16 @@ entity ov_controller is
 end entity;
 
 architecture ov_controller_a of ov_controller is
-	signal tx_ed, en: std_logic;
+	signal clk1400ns, tx_ed, en: std_logic;
 	signal config: std_logic_vector(15 downto 0);
 begin
 	OV_PWDN <= reset;
 	OV_RESET <= not reset;
 	OV_XCLK <= clk25;
+	
+	clk_divider_i: entity clk_divider generic map (
+		DIVIDER => 140
+	) port map (reset => reset, i => CLK100, o => clk1400ns);
 	
 	ov_sccb_i: entity ov_sccb port map (
 		reset => reset,

@@ -59,7 +59,7 @@ architecture fyp_a of fyp is
 	constant ADDR_LENGTH: natural := natural(floor(log2(real(H * V)))) + 1;
 	
 	signal BTNC_2: std_logic;
-	signal clk25, clk1400ns: std_logic;
+	signal clk25: std_logic;
 	signal we, we_2: std_logic;
 	signal addr_w, addr_r, addr_w_2, addr_r_2: unsigned(ADDR_LENGTH - 1 downto 0);
 	signal pixel_w, pixel_r, pixel_w_2, pixel_r_2: unsigned(PIXEL_LENGTH - 1 downto 0);
@@ -89,12 +89,9 @@ architecture fyp_a of fyp is
 begin
 	debouncer_i: entity debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC_2);
 	
-	clk_divider_25_i: entity clk_divider generic map (
+	clk_divider_i: entity clk_divider generic map (
 		DIVIDER => 4
 	) port map (reset => BTNC_2, i => CLK100, o => clk25);
-	clk_divider_1400ns_i: entity clk_divider generic map (
-		DIVIDER => 140
-	) port map (reset => BTNC_2, i => CLK100, o => clk1400ns);
 	
 	ov_controller_i: entity ov_controller generic map (
 		OV_ADDR => OV_ADDR,
@@ -104,7 +101,6 @@ begin
 		reset => BTNC_2,
 		CLK100 => CLK100,
 		clk25 => clk25,
-		clk1400ns => clk1400ns,
 		OV_SIOC => OV_SIOC,
 		OV_SIOD => OV_SIOD,
 		OV_PWDN => OV_PWDN,
