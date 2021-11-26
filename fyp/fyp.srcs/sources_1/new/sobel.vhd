@@ -21,16 +21,26 @@ entity sobel is
 end entity;
 
 architecture sobel_a of sobel is
-	constant KERNEL_X: integer_vector := (1, 0, -1, 2, 0, -2, 1, 0, -1);
-	constant KERNEL_Y: integer_vector := (1, 2, 1, 0, 0, 0, -1, -2, -1);
+	constant KERNEL_X: integer_vector(0 to 8) := (1, 0, -1, 2, 0, -2, 1, 0, -1);
+	constant KERNEL_Y: integer_vector(0 to 8) := (1, 2, 1, 0, 0, 0, -1, -2, -1);
 	constant PROCESSED_PIXEL_LENGTH: natural := PIXEL_LENGTH * 3;
-	constant NORM_SHIFT: natural := 2;
+	constant THRESHOLD: natural := 4;
+	constant AMP_SHIFT: natural := 3;
 	signal state: unsigned(3 downto 0);
-	signal pixel_w_x, pixel_w_y: unsigned(pixel_w'range);
-	signal pixel_w_z: unsigned(pixel_w'length + 1 - 1 downto 0);
+	signal pixel_w_x, pixel_w_y: unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
 begin
-	pixel_w_z <= ("0" & pixel_w_x) + ("0" & pixel_w_y);
-	pixel_w <= pixel_w_z(pixel_w_z'left downto 1);
+	process (all)
+		variable sum: unsigned(pixel_w_x'length + 1 - 1 downto 0);
+	begin
+		sum := ("0" & pixel_w_x) + ("0" & pixel_w_y);
+		sum := "0" & sum(sum'left downto 1);
+		sum := sum(sum'left - AMP_SHIFT downto 0) & (AMP_SHIFT - 1 downto 0 => '0');
+		if sum <= (sum'length - pixel_w'length => '0') & (pixel_w'range => '1') then
+			pixel_w <= sum(pixel_w'range);
+		else
+			pixel_w <= (others => '1');
+		end if;
+	end process;
 	
 	kernel3_controller_i: entity kernel3_controller generic map (
 		H => H,
@@ -49,7 +59,7 @@ begin
 		PIXEL_LENGTH => PIXEL_LENGTH,
 		KERNEL => KERNEL_X,
 		PROCESSED_PIXEL_LENGTH => PROCESSED_PIXEL_LENGTH,
-		NORM_SHIFT => NORM_SHIFT
+		THRESHOLD => THRESHOLD
 	) port map (
 		CLK100 => CLK100,
 		state => state,
@@ -60,7 +70,7 @@ begin
 		PIXEL_LENGTH => PIXEL_LENGTH,
 		KERNEL => KERNEL_Y,
 		PROCESSED_PIXEL_LENGTH => PROCESSED_PIXEL_LENGTH,
-		NORM_SHIFT => NORM_SHIFT
+		THRESHOLD => THRESHOLD
 	) port map (
 		CLK100 => CLK100,
 		state => state,
