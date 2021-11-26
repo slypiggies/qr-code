@@ -20,7 +20,7 @@ architecture ov_sccb_tb_a of ov_sccb_tb is
 	signal clk1400ns: std_logic;
 begin
 	clk_divider_1400ns_i: entity clk_divider generic map (
-		divider => 140
+		DIVIDER => 140
 	) port map (reset => reset, i => clk100, o => clk1400ns);
 	
 	ov_sccb_i: entity ov_sccb port map (
