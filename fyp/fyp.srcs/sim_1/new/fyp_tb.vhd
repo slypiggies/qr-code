@@ -41,6 +41,7 @@ begin
 	process begin
 		wait until falling_edge(clk100);
 		reset <= '0';
+		wait;
 	end process;
 	
 	ENABLE_OV_SCCB_TB_if: if ENABLE_OV_SCCB_TB generate
