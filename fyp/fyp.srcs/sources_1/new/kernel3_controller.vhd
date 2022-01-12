@@ -74,7 +74,7 @@ begin
 			h_cnt <= (others => '0');
 			v_cnt <= (others => '0');
 		elsif rising_edge(CLK100) then
-			addr_w_3 <= addr_w_2; -- 1 clock delay for kernel3_convolutor
+			addr_w_3 <= addr_w_2; -- 1 clock delay for `kernel3_convolutor`.
 			if state_2 < X"8" then
 				state_2 <= state_2 + 1;
 				we <= '0';
