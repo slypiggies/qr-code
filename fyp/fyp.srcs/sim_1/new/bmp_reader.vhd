@@ -20,9 +20,10 @@ end entity;
 architecture bmp_reader_a of bmp_reader is
 	signal rx_ed_2: boolean := false;
 begin
-	rx_ed <= rx_ed_2;
 	assert H mod 4 = 0 severity failure;
 	assert V mod 4 = 0 severity failure;
+	
+	rx_ed <= rx_ed_2;
 	process
 		file bmp: file_t open read_mode is PATH_PREFIX & "/in.bmp";
 		function to_natural(bytes: character_array_t(0 to 3)) return natural is begin

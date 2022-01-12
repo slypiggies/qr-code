@@ -21,6 +21,9 @@ end entity;
 architecture bmp_writer_a of bmp_writer is
 	signal tx_ed_2: boolean := false;
 begin
+	assert H mod 4 = 0 severity failure;
+	assert V mod 4 = 0 severity failure;
+	
 	tx_ed <= tx_ed_2;
 	process
 		file bmp: file_t open write_mode is PATH_PREFIX & "/out.bmp";
