@@ -9,11 +9,11 @@ entity fake_frame_buffer_y_out is
 		H, V: natural;
 		ADDR_LENGTH: natural;
 		PIXEL_LENGTH: natural;
-		HEADER_LENGTH: natural;
-		PATH_PREFIX: string
+		BMP_HEADER_LENGTH: natural;
+		BMP_PATH: string
 	);
 	port (
-		header: in character_array_t(0 to HEADER_LENGTH - 1);
+		bmp_header: in character_array_t(0 to BMP_HEADER_LENGTH - 1);
 		processed: in boolean;
 		addr: in unsigned(ADDR_LENGTH - 1 downto 0);
 		pixel: in unsigned(PIXEL_LENGTH - 1 downto 0);
@@ -34,10 +34,10 @@ begin
 		V => V,
 		ADDR_LENGTH => ADDR_LENGTH,
 		PIXEL_LENGTH => PIXEL_LENGTH,
-		HEADER_LENGTH => HEADER_LENGTH,
-		PATH_PREFIX => PATH_PREFIX
+		BMP_HEADER_LENGTH => BMP_HEADER_LENGTH,
+		BMP_PATH => BMP_PATH
 	) port map (
-		header => header,
+		bmp_header => bmp_header,
 		processed => processed,
 		pixels => pixels,
 		tx_ed => tx_ed
