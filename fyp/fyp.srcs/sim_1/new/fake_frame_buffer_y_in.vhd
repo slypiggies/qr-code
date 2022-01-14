@@ -24,7 +24,7 @@ architecture fake_frame_buffer_y_in_a of fake_frame_buffer_y_in is
 	signal pixels: character_array_t(0 to H * V - 1);
 	signal pixel_2: unsigned(7 downto 0);
 begin
-	assert addr < to_unsigned(H * V, addr'length);
+	assert addr < to_unsigned(H * V, addr'length) severity warning; -- May occur in the beginning.
 	pixel_2 <= to_unsigned(character'pos(pixels(to_integer(addr))), pixel_2'length); 
 	pixel <= pixel_2(pixel_2'left downto pixel_2'left - PIXEL_LENGTH + 1);
 	
