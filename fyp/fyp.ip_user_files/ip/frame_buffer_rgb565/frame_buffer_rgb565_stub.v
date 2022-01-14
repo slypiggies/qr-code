@@ -1,7 +1,7 @@
 // Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-// Date        : Tue Nov 23 19:40:57 2021
+// Date        : Fri Jan 14 19:54:07 2022
 // Host        : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
 // Command     : write_verilog -force -mode synth_stub
 //               c:/Data/FYP/fyp/fyp.gen/sources_1/ip/frame_buffer_rgb565/frame_buffer_rgb565_stub.v
