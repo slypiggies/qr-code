@@ -111,7 +111,7 @@ begin
 			PIXEL_LENGTH => PIXEL_LENGTH
 		) port map (
 			reset => reset,
-			CLK100 => CLK100,
+			CLK100 => clk100,
 			addr_r => addr_2,
 			addr_w => addr_3,
 			pixel_r => pixel,
