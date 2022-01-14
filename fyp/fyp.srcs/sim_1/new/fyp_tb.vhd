@@ -15,8 +15,8 @@ architecture fyp_tb_a of fyp_tb is
 	constant ENABLE_KERNEL3_TB: boolean := false;
 --	constant ENABLE_KERNEL3_TB: boolean := true;
 	
---	constant ENABLE_SOBEL: boolean := false;
-	constant ENABLE_SOBEL: boolean := true;
+--	constant ENABLE_PROCESSING: boolean := false;
+	constant ENABLE_PROCESSING: boolean := true;
 	
 	constant ADDR: std_logic_vector(7 downto 0) := X"42";
 	constant D: std_logic_vector(15 downto 0) := B"01010101_00110011";
@@ -89,7 +89,7 @@ begin
 		);
 	end generate;
 	
-	ENABLE_SOBEL_if: if ENABLE_SOBEL generate
+	ENABLE_PROCESSING_if: if ENABLE_PROCESSING generate
 		fake_frame_buffer_y_in_i: entity fake_frame_buffer_y_in generic map (
 			H => H,
 			V => V,
