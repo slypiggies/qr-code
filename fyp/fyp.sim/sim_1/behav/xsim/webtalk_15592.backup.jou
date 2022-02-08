@@ -2,11 +2,11 @@
 # Webtalk v2020.2 (64-bit)
 # SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
 # IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
-# Start of session at: Tue Nov 23 01:49:42 2021
-# Process ID: 27268
+# Start of session at: Tue Feb  8 01:41:57 2022
+# Process ID: 15592
 # Current directory: C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim
-# Command line: wbtcv.exe -mode batch -source C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim/xsim.dir/kernel3_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+# Command line: wbtcv.exe -mode batch -source C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim/xsim.dir/fyp_tb_behav/webtalk/xsim_webtalk.tcl -notrace
 # Log file: C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim/webtalk.log
 # Journal file: C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim\webtalk.jou
 #-----------------------------------------------------------
-source C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim/xsim.dir/kernel3_tb_behav/webtalk/xsim_webtalk.tcl -notrace
+source C:/Data/FYP/fyp/fyp.sim/sim_1/behav/xsim/xsim.dir/fyp_tb_behav/webtalk/xsim_webtalk.tcl -notrace

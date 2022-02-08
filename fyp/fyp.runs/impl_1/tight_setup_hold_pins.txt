@@ -1,0 +1,16 @@
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|       Launch Clock       |      Capture Clock       |                                                 Pin                                                      |
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+
+|                   CLK100 |                   CLK100 |                                         ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[12]/D|
+|                   CLK100 |                   CLK100 |                                         ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[12]/D|
+|                   CLK100 |                   CLK100 |                                         ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[11]/D|
+|                   CLK100 |                   CLK100 |                                         ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[11]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[8]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[8]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[7]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[7]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[4]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[4]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_y_i/sum_reg[3]/D|
+|                   CLK100 |                   CLK100 |                                          ENABLE_PROCESSING_if.sobel_i/kernel3_convolutor_x_i/sum_reg[3]/D|
++--------------------------+--------------------------+----------------------------------------------------------------------------------------------------------+

@@ -70,6 +70,8 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
+set_param chipscope.maxJobs 1
+set_param xicom.use_bs_reader 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7z020clg484-1
 
@@ -88,6 +90,7 @@ set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_vhdl -vhdl2008 -library xil_defaultlib {
+  C:/Data/FYP/fyp/fyp.srcs/sources_1/new/helper.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/clk_divider.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/debouncer.vhd
   C:/Data/FYP/fyp/fyp.srcs/sources_1/new/ov_sccb.vhd
