@@ -1,16 +1,12 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-library work;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
 use work.all;
+use helper_tb.all;
+use helper.all;
 
 entity kernel3_tb is
-	generic (
-		H, V: natural;
-		ADDR_LENGTH: natural;
-		PIXEL_LENGTH: natural;
-		PROCESSED_PIXEL_LENGTH: natural
-	);
 	port (
 		reset, clk100: in std_logic;
 		addr_r, addr_w: out unsigned(ADDR_LENGTH - 1 downto 0);
@@ -39,7 +35,6 @@ begin
 	);
 	
 	kernel3_convolutor_i: entity kernel3_convolutor generic map (
-		PIXEL_LENGTH => PIXEL_LENGTH,
 		KERNEL => KERNEL,
 		PROCESSED_PIXEL_LENGTH => PROCESSED_PIXEL_LENGTH,
 		THRESHOLD => THRESHOLD

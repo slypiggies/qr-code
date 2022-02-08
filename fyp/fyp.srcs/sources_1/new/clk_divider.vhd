@@ -1,7 +1,9 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use ieee.math_real.all;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
+use work.all;
+use helper.all;
 
 entity clk_divider is
 	generic (
@@ -16,9 +18,11 @@ end entity;
 
 architecture clk_divider_a of clk_divider is
 	constant N: natural := DIVIDER / 2;
-	signal cnt: unsigned(natural(floor(log2(real(N)))) + 1 - 1 downto 0);
+	signal cnt: unsigned(cnt_bit(N) - 1 downto 0);
 	signal o_2: std_logic;
 begin
+	assert_synth(DIVIDER mod 2 = 0);
+	
 	o <= o_2;
 	process (all) begin
 		if reset = '1' then

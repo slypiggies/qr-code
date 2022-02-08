@@ -1,8 +1,11 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
 library unisim;
-use unisim.vcomponents.all;
+use unisim.all;
+use work.all;
+use helper.all;
 
 entity ov_sccb is
 	port (
@@ -26,7 +29,7 @@ architecture ov_sccb_a of ov_sccb is
 	signal bit_cnt, byte_cnt: unsigned(3 downto 0);
 	signal clk1400ns_prev: std_logic;
 begin
-	iobuf_i: iobuf port map (
+	iobuf_i: vcomponents.iobuf port map (
 		i => sda_2,
 		o => o,
 		io => sda,

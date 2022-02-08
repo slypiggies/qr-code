@@ -1,9 +1,9 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-use ieee.math_real.all;
-library work;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
 use work.all;
+use helper.all;
 
 entity fyp is
 	port (
@@ -27,23 +27,6 @@ entity fyp is
 end entity;
 
 architecture fyp_a of fyp is
---	constant ENABLE_PROCESSING: boolean := false;
-	constant ENABLE_PROCESSING: boolean := true;
-	
---	constant USE_RGB565: boolean := true;
---	constant PIXEL_LENGTH: natural := 12;
---	constant NO_CONFIG: boolean := false;
-	
---	constant USE_RGB565: boolean := false;
---	constant PIXEL_LENGTH: natural := 4;
---	constant NO_CONFIG: boolean := true;
-	
-	constant USE_RGB565: boolean := false;
-	constant PIXEL_LENGTH: natural := 4;
-	constant NO_CONFIG: boolean := false;
-	
-	constant OV_ADDR: std_logic_vector(7 downto 0) := X"42";
-
 	constant H: natural := 640;
 	constant H_FRONT_PORCH: natural := 16;
 	constant H_SYNC_PULSE: natural := 96;
@@ -56,7 +39,7 @@ architecture fyp_a of fyp is
 	constant V_BACK_PORCH: natural := 33;
 	constant V_POLARITY: std_logic := '0';
 	
-	constant ADDR_LENGTH: natural := natural(floor(log2(real(H * V)))) + 1;
+	constant ADDR_LENGTH: natural := cnt_bit(H * V);
 	
 	signal BTNC_2: std_logic;
 	signal clk25: std_logic;
@@ -87,17 +70,15 @@ architecture fyp_a of fyp is
 	  );
 	END COMPONENT;
 begin
+	check_assertions;
+	
 	debouncer_i: entity debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC_2);
 	
 	clk_divider_i: entity clk_divider generic map (
 		DIVIDER => 4
 	) port map (reset => BTNC_2, i => CLK100, o => clk25);
 	
-	ov_controller_i: entity ov_controller generic map (
-		OV_ADDR => OV_ADDR,
-		USE_RGB565 => USE_RGB565,
-		NO_CONFIG => NO_CONFIG
-	) port map (
+	ov_controller_i: entity ov_controller port map (
 		reset => BTNC_2,
 		CLK100 => CLK100,
 		clk25 => clk25,
@@ -109,10 +90,7 @@ begin
 	);
 	
 	ov_capturer_i: entity ov_capturer generic map (
-		ADDR_LENGTH => ADDR_LENGTH,
-		USE_RGB565 => USE_RGB565,
-		PIXEL_LENGTH => PIXEL_LENGTH,
-		NO_CONFIG => NO_CONFIG
+		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
 		reset => BTNC_2,
 		OV_PCLK => OV_PCLK,
@@ -125,6 +103,8 @@ begin
 	);
 	
 	ENABLE_PROCESSING_if: if ENABLE_PROCESSING generate
+		assert_synth(not USE_RGB565);
+		
 		frame_buffer_y_i: frame_buffer_y port map (
 			clka => OV_PCLK,
 			wea(0) => we,
@@ -138,8 +118,7 @@ begin
 		sobel_i: entity sobel generic map (
 			H => H,
 			V => V,
-			ADDR_LENGTH => ADDR_LENGTH,
-			PIXEL_LENGTH => PIXEL_LENGTH
+			ADDR_LENGTH => ADDR_LENGTH
 		) port map (
 			reset => BTNC_2,
 			CLK100 => CLK100,
@@ -197,9 +176,7 @@ begin
 		V_SYNC_PULSE => V_SYNC_PULSE,
 		V_BACK_PORCH => V_BACK_PORCH,
 		V_POLARITY => V_POLARITY,
-		ADDR_LENGTH => ADDR_LENGTH,
-		USE_RGB565 => USE_RGB565,
-		PIXEL_LENGTH => PIXEL_LENGTH
+		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
 		reset => BTNC_2,
 		clk25 => clk25,

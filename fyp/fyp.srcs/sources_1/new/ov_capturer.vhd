@@ -1,13 +1,13 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
+use work.all;
+use helper.all;
 
 entity ov_capturer is
 	generic (
-		ADDR_LENGTH: natural;
-		USE_RGB565: boolean;
-		PIXEL_LENGTH: natural;
-		NO_CONFIG: boolean
+		ADDR_LENGTH: natural
 	);
 	port (
 		reset: in std_logic;
@@ -28,9 +28,9 @@ begin
 	we <= we_2;
 	addr <= addr_2;
 	pixel_2 <=
-		shift_reg(15 downto 12) & shift_reg(10 downto 7) & shift_reg(4 downto 1) when USE_RGB565
-		else shift_reg(7 downto 4) when NO_CONFIG
-		else shift_reg(15 downto 12);
+		shift_reg(15 downto 15 - COLOR_LENGTH + 1) & shift_reg(10 downto 10 - COLOR_LENGTH + 1) & shift_reg(4 downto 4 - COLOR_LENGTH + 1) when USE_RGB565
+		else shift_reg(7 downto 7 - COLOR_LENGTH + 1) when NO_CONFIG
+		else shift_reg(15 downto 15 - COLOR_LENGTH + 1);
 	pixel <= unsigned(pixel_2);
 	
 	process (all) begin

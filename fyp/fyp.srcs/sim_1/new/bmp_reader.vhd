@@ -1,14 +1,11 @@
-use std.textio.all;
-library work;
-use work.helper_tb.all;
+use std.all;
+use textio.all;
+use work.all;
+use helper_tb.all;
 
 entity bmp_reader is
 	generic (
-		H, V: natural;
-		ADDR_LENGTH: natural;
-		PIXEL_LENGTH: natural;
-		BMP_HEADER_LENGTH: natural;
-		BMP_PATH: string
+		BMP_FILE: string
 	);
 	port (
 		bmp_header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
@@ -20,12 +17,9 @@ end entity;
 architecture bmp_reader_a of bmp_reader is
 	signal rx_ed_2: boolean := false;
 begin
-	assert H mod 4 = 0 severity failure;
-	assert V mod 4 = 0 severity failure;
-	
 	rx_ed <= rx_ed_2;
 	process
-		file bmp: file_t open read_mode is BMP_PATH;
+		file bmp: file_t open read_mode is BMP_PATH_PREFIX & BMP_FILE;
 		function to_natural(bytes: character_array_t(0 to 3)) return natural is begin
 			return
 				character'pos(bytes(0)) +
@@ -44,8 +38,8 @@ begin
 		end loop;
 		assert
 			bh(0 to 1) = "BM" and
-			to_natural(bh(2 to 5)) = 54 + H * V * 3 and
-			to_natural(bh(10 to 13)) = 54 and
+			to_natural(bh(2 to 5)) = BMP_HEADER_LENGTH + H * V * 3 and
+			to_natural(bh(10 to 13)) = BMP_HEADER_LENGTH and
 			to_natural(bh(14 to 17)) = 40 and
 			to_natural(bh(18 to 21)) = H and
 			to_natural(bh(22 to 25)) = V and

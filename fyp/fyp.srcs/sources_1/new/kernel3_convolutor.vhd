@@ -1,10 +1,12 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
+use work.all;
+use helper.all;
 
 entity kernel3_convolutor is
 	generic (
-		PIXEL_LENGTH: natural;
 		KERNEL: integer_vector(0 to 8);
 		PROCESSED_PIXEL_LENGTH: natural;
 		THRESHOLD: natural
@@ -20,6 +22,9 @@ end entity;
 architecture kernel3_convolutor_a of kernel3_convolutor is
 	signal sum, sum_abs: signed(pixel_w'length + 1 - 1 downto 0);
 begin
+	assert_synth(PROCESSED_PIXEL_LENGTH >= (PIXEL_LENGTH + 1) * 2); -- This may not be enough, because the convoluted sum may still be wider than `(PIXEL_LENGTH + 1) * 2`, depending on `KERNEL`.
+	assert_synth(to_unsigned(THRESHOLD, PROCESSED_PIXEL_LENGTH) <= (PROCESSED_PIXEL_LENGTH downto 1 => '1'));
+	
 	sum_abs <=
 		sum when sum >= to_signed(0, sum'length)
 		else -sum;

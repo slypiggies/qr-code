@@ -1,16 +1,13 @@
 library ieee;
-use ieee.numeric_std.all;
-library work;
-use work.helper_tb.all;
+use ieee.all;
+use numeric_std.all;
 use work.all;
+use helper_tb.all;
+use helper.all;
 
 entity fake_frame_buffer_y_in is
 	generic (
-		H, V: natural;
-		ADDR_LENGTH: natural;
-		PIXEL_LENGTH: natural;
-		BMP_HEADER_LENGTH: natural;
-		BMP_PATH: string
+		BMP_FILE: string
 	);
 	port (
 		bmp_header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
@@ -29,12 +26,7 @@ begin
 	pixel <= pixel_2(pixel_2'left downto pixel_2'left - PIXEL_LENGTH + 1);
 	
 	bmp_reader_i: entity bmp_reader generic map (
-		H => H,
-		V => V,
-		ADDR_LENGTH => ADDR_LENGTH,
-		PIXEL_LENGTH => PIXEL_LENGTH,
-		BMP_HEADER_LENGTH => BMP_HEADER_LENGTH,
-		BMP_PATH => BMP_PATH
+		BMP_FILE => BMP_FILE
 	) port map (
 		bmp_header => bmp_header,
 		pixels => pixels,

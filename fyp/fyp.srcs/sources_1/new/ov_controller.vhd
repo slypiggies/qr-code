@@ -1,15 +1,10 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
-library work;
+use ieee.all;
+use std_logic_1164.all;
 use work.all;
+use helper.all;
 
 entity ov_controller is
-	generic (
-		OV_ADDR: std_logic_vector(7 downto 0);
-		USE_RGB565: boolean;
-		NO_CONFIG: boolean
-	);
 	port (
 		reset: in std_logic;
 		CLK100, clk25: in std_logic;
@@ -45,10 +40,7 @@ begin
 		en => en
 	);
 	
-	ov_config_i: entity ov_config generic map (
-		USE_RGB565 => USE_RGB565,
-		NO_CONFIG => NO_CONFIG
-	) port map (
+	ov_config_i: entity ov_config port map (
 		reset => reset,
 		CLK100 => CLK100,
 		tx_ed => tx_ed,

@@ -1,6 +1,9 @@
 library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+use ieee.all;
+use std_logic_1164.all;
+use numeric_std.all;
+use work.all;
+use helper.all;
 
 entity vga is
 	generic (
@@ -9,16 +12,12 @@ entity vga is
 		H_SYNC_PULSE: natural;
 		H_BACK_PORCH: natural;
 		H_POLARITY: std_logic;
-		
 		V: natural;
 		V_FRONT_PORCH: natural;
 		V_SYNC_PULSE: natural;
 		V_BACK_PORCH: natural;
 		V_POLARITY: std_logic;
-		
-		ADDR_LENGTH: natural;
-		USE_RGB565: boolean;
-		PIXEL_LENGTH: natural
+		ADDR_LENGTH: natural
 	);
 	port (
 		reset: in std_logic;
@@ -71,13 +70,19 @@ begin
 			
 			if h_cnt < to_unsigned(H, h_cnt'length) and v_cnt < to_unsigned(V, v_cnt'length) then
 				if USE_RGB565 then
-					VGA_R_2 <= pixel(11 downto 8);
-					VGA_G_2 <= pixel(7 downto 4);
-					VGA_B_2 <= pixel(3 downto 0);
+					VGA_R_2 <= pixel(pixel'left downto pixel'left - COLOR_LENGTH + 1);
+					VGA_G_2 <= pixel(pixel'left - COLOR_LENGTH downto pixel'right + COLOR_LENGTH);
+					VGA_B_2 <= pixel(pixel'right + COLOR_LENGTH - 1 downto pixel'right);
 				else
-					VGA_R_2 <= pixel;
-					VGA_G_2 <= pixel;
-					VGA_B_2 <= pixel;
+					if VGA_R_2'length = pixel'length then
+						VGA_R_2 <= pixel;
+						VGA_G_2 <= pixel;
+						VGA_B_2 <= pixel;
+					else
+						VGA_R_2 <= pixel & (VGA_R_2'length - pixel'length downto 1 => '0');
+						VGA_G_2 <= pixel & (VGA_G_2'length - pixel'length downto 1 => '0');
+						VGA_B_2 <= pixel & (VGA_B_2'length - pixel'length downto 1 => '0');
+					end if;
 				end if;
 				addr_2 <= addr_2 + 1;
 			else
