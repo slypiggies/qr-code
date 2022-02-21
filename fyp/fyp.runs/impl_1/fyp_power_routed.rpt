@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date             : Wed Feb  9 00:48:18 2022
+| Date             : Tue Feb 22 02:46:59 2022
 | Host             : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
 | Command          : report_power -file fyp_power_routed.rpt -pb fyp_power_summary_routed.pb -rpx fyp_power_routed.rpx
 | Design           : fyp
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 0.153        |
+| Total On-Chip Power (W)  | 0.155        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 0.042        |
+| Dynamic (W)              | 0.045        |
 | Device Static (W)        | 0.111        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 83.2         |
@@ -52,19 +52,19 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Clocks         |     0.004 |        3 |       --- |             --- |
-| Slice Logic    |     0.003 |      957 |       --- |             --- |
+| Clocks         |     0.005 |        3 |       --- |             --- |
+| Slice Logic    |     0.003 |      960 |       --- |             --- |
 |   LUT as Logic |     0.003 |      456 |     53200 |            0.86 |
 |   CARRY4       |    <0.001 |       64 |     13300 |            0.48 |
-|   Register     |    <0.001 |      272 |    106400 |            0.26 |
+|   Register     |    <0.001 |      274 |    106400 |            0.26 |
 |   BUFG         |    <0.001 |        2 |        32 |            6.25 |
-|   Others       |     0.000 |      119 |       --- |             --- |
-| Signals        |     0.005 |      834 |       --- |             --- |
+|   Others       |     0.000 |      120 |       --- |             --- |
+| Signals        |     0.006 |      837 |       --- |             --- |
 | Block RAM      |     0.016 |     75.5 |       140 |           53.93 |
 | DSPs           |    <0.001 |        1 |       220 |            0.45 |
-| I/O            |     0.014 |       36 |       200 |           18.00 |
+| I/O            |     0.016 |       36 |       200 |           18.00 |
 | Static Power   |     0.111 |          |           |                 |
-| Total          |     0.153 |          |           |                 |
+| Total          |     0.155 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,8 +74,8 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |     0.036 |       0.027 |      0.009 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.011 |       0.000 |      0.010 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |     0.037 |       0.028 |      0.009 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.011 |       0.001 |      0.010 |       NA    | Unspecified | NA         |
 | Vcco33    |       3.300 |     0.005 |       0.004 |      0.001 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -150,7 +150,7 @@ Table of Contents
 +-----------------------------------------------+-----------+
 | Name                                          | Power (W) |
 +-----------------------------------------------+-----------+
-| fyp                                           |     0.042 |
+| fyp                                           |     0.045 |
 |   ENABLE_PROCESSING_if.frame_buffer_y_i       |     0.015 |
 |     U0                                        |     0.015 |
 |       inst_blk_mem_gen                        |     0.015 |
@@ -158,11 +158,10 @@ Table of Contents
 |     U0                                        |     0.002 |
 |       inst_blk_mem_gen                        |     0.002 |
 |   ENABLE_PROCESSING_if.sobel_i                |     0.008 |
-|     kernel3_controller_i                      |     0.004 |
+|     kernel3_controller_i                      |     0.005 |
 |     kernel3_convolutor_x_i                    |     0.002 |
 |     kernel3_convolutor_y_i                    |     0.002 |
 |   ov_controller_i                             |     0.002 |
-|     ov_sccb_i                                 |     0.001 |
 +-----------------------------------------------+-----------+
 
 

@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date         : Wed Feb  9 00:43:20 2022
+| Date         : Tue Feb 22 02:43:49 2022
 | Host         : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file fyp_control_sets_placed.rpt
 | Design       : fyp
@@ -27,7 +27,7 @@ Table of Contents
 |    Minimum number of control sets                        |    22 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    96 |
+| Unused register locations in slices containing registers |    94 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              56 |           18 |
-| No           | No                    | Yes                    |              37 |           17 |
+| No           | No                    | No                     |              56 |           22 |
+| No           | No                    | Yes                    |              39 |           20 |
 | No           | Yes                   | No                     |               0 |            0 |
-| Yes          | No                    | No                     |              43 |           17 |
+| Yes          | No                    | No                     |              43 |           15 |
 | Yes          | No                    | Yes                    |             100 |           34 |
-| Yes          | Yes                   | No                     |              36 |           12 |
+| Yes          | Yes                   | No                     |              36 |           10 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -73,28 +73,28 @@ Table of Contents
 +-----------------------+------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
 |      Clock Signal     |                              Enable Signal                             |              Set/Reset Signal             | Slice Load Count | Bel Load Count | Bels / Slice |
 +-----------------------+------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
-|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/VGA_HS0                             |                1 |              1 |         1.00 |
-|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/VGA_VS0                             |                1 |              1 |         1.00 |
-|  OV_PCLK_IBUF_BUFG    |                                                                        | ov_capturer_i/we_2_i_2_n_0                |                1 |              1 |         1.00 |
-|  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/sda_2_i_1_n_0                                | debouncer_i/o                             |                1 |              1 |         1.00 |
 |  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/scl_i_1_n_0                                  | debouncer_i/o                             |                1 |              1 |         1.00 |
+|  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/sda_2_i_1_n_0                                | debouncer_i/o                             |                1 |              1 |         1.00 |
+|  OV_PCLK_IBUF_BUFG    |                                                                        | ov_capturer_i/we_2_i_2_n_0                |                1 |              1 |         1.00 |
+|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/h_sync0                             |                1 |              1 |         1.00 |
+|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/v_sync0                             |                1 |              1 |         1.00 |
 |  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/bit_cnt                                      | debouncer_i/o                             |                1 |              4 |         4.00 |
 |  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/d_2[15]_i_1_n_0                              | ov_controller_i/ov_sccb_i/d_2[23]_i_1_n_0 |                2 |              6 |         3.00 |
-|  OV_PCLK_IBUF_BUFG    | ov_capturer_i/shift_reg0                                               |                                           |                5 |              8 |         1.60 |
-|  CLK100_IBUF_BUFG     | ov_controller_i/ov_config_i/cnt0                                       | debouncer_i/o                             |                2 |              8 |         4.00 |
-|  CLK100_IBUF_BUFG     | ENABLE_PROCESSING_if.sobel_i/kernel3_controller_i/v_cnt                | debouncer_i/o                             |                4 |              9 |         2.25 |
+|  CLK100_IBUF_BUFG     | ov_controller_i/ov_config_i/cnt0                                       | debouncer_i/o                             |                3 |              8 |         2.67 |
+|  OV_PCLK_IBUF_BUFG    | ov_capturer_i/d_20                                                     |                                           |                3 |              8 |         2.67 |
+|  CLK100_IBUF_BUFG     | ENABLE_PROCESSING_if.sobel_i/kernel3_controller_i/v_cnt                | debouncer_i/o                             |                6 |              9 |         1.50 |
 |  clk_divider_i/o_BUFG |                                                                        | debouncer_i/o                             |                3 |             10 |         3.33 |
-|  clk_divider_i/o_BUFG | vga_i/v_cnt[9]_i_1_n_0                                                 | debouncer_i/o                             |                5 |             10 |         2.00 |
-|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/VGA_R_2[3]_i_1_n_0                  |                4 |             12 |         3.00 |
-|  clk_divider_i/o_BUFG |                                                                        |                                           |                5 |             14 |         2.80 |
-|  CLK100_IBUF_BUFG     | debouncer_i/cnt[0]_i_2_n_0                                             | debouncer_i/cnt[0]_i_1_n_0                |                4 |             16 |         4.00 |
+|  clk_divider_i/o_BUFG | vga_i/v_cnt[9]_i_1_n_0                                                 | debouncer_i/o                             |                4 |             10 |         2.50 |
+|  clk_divider_i/o_BUFG | vga_i/p_1_in                                                           | vga_i/r_2[3]_i_1_n_0                      |                2 |             12 |         6.00 |
+|  clk_divider_i/o_BUFG |                                                                        |                                           |                6 |             14 |         2.33 |
 |  CLK100_IBUF_BUFG     | ov_controller_i/ov_sccb_i/d_2[15]_i_1_n_0                              |                                           |                6 |             16 |         2.67 |
-|  clk_divider_i/o_BUFG | vga_i/addr_2[18]_i_1_n_0                                               | debouncer_i/o                             |                5 |             19 |         3.80 |
-|  OV_PCLK_IBUF_BUFG    | ov_capturer_i/addr_2[18]_i_1_n_0                                       | ov_capturer_i/we_2_i_2_n_0                |                5 |             19 |         3.80 |
+|  CLK100_IBUF_BUFG     | debouncer_i/cnt[0]_i_2_n_0                                             | debouncer_i/cnt[0]_i_1_n_0                |                4 |             16 |         4.00 |
 |  CLK100_IBUF_BUFG     | ENABLE_PROCESSING_if.sobel_i/kernel3_controller_i/addr_w_3[18]_i_1_n_0 |                                           |                6 |             19 |         3.17 |
-|  CLK100_IBUF_BUFG     |                                                                        | debouncer_i/o                             |               13 |             26 |         2.00 |
-|  CLK100_IBUF_BUFG     | ENABLE_PROCESSING_if.sobel_i/kernel3_controller_i/state[3]             | debouncer_i/o                             |               10 |             29 |         2.90 |
-|  CLK100_IBUF_BUFG     |                                                                        |                                           |               13 |             42 |         3.23 |
+|  OV_PCLK_IBUF_BUFG    | ov_capturer_i/addr_2[18]_i_1_n_0                                       | ov_capturer_i/we_2_i_2_n_0                |                5 |             19 |         3.80 |
+|  clk_divider_i/o_BUFG | vga_i/addr_2[18]_i_1_n_0                                               | debouncer_i/o                             |                5 |             19 |         3.80 |
+|  CLK100_IBUF_BUFG     |                                                                        | debouncer_i/o                             |               16 |             28 |         1.75 |
+|  CLK100_IBUF_BUFG     | ENABLE_PROCESSING_if.sobel_i/kernel3_controller_i/state[3]             | debouncer_i/o                             |                8 |             29 |         3.63 |
+|  CLK100_IBUF_BUFG     |                                                                        |                                           |               16 |             42 |         2.63 |
 +-----------------------+------------------------------------------------------------------------+-------------------------------------------+------------------+----------------+--------------+
 
 

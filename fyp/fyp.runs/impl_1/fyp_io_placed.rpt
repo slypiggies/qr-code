@@ -1,7 +1,7 @@
 Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------
 | Tool Version              : Vivado v.2020.2 (win64) Build 3064766 Wed Nov 18 09:12:45 MST 2020
-| Date                      : Wed Feb  9 00:43:20 2022
+| Date                      : Tue Feb 22 02:43:49 2022
 | Host                      : LAPTOP-2GK32TES running 64-bit major release  (build 9200)
 | Command                   : report_io -file fyp_io_placed.rpt
 | Design                    : fyp
