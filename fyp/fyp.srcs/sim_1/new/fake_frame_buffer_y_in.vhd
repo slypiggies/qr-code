@@ -7,11 +7,11 @@ use helper.all;
 
 entity fake_frame_buffer_y_in is
 	generic (
-		BMP_FILE: string
+		BMP_FILE_NAME: string
 	);
 	port (
 		bmp_header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
-		rx_ed: out boolean;
+		ed: out boolean;
 		addr: in unsigned(ADDR_LENGTH - 1 downto 0);
 		pixel: out unsigned(PIXEL_LENGTH - 1 downto 0)
 	);
@@ -26,10 +26,10 @@ begin
 	pixel <= pixel_2(pixel_2'left downto pixel_2'left - PIXEL_LENGTH + 1);
 	
 	bmp_reader_i: entity bmp_reader generic map (
-		BMP_FILE => BMP_FILE
+		FILE_NAME => BMP_FILE_NAME
 	) port map (
-		bmp_header => bmp_header,
+		header => bmp_header,
 		pixels => pixels,
-		rx_ed => rx_ed
+		ed => ed
 	);
 end architecture;

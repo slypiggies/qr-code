@@ -7,43 +7,42 @@ use helper.all;
 entity ov_controller is
 	port (
 		reset: in std_logic;
-		CLK100, clk25: in std_logic;
-		OV_SIOC: out std_logic;
-		OV_SIOD: inout std_logic;
-		OV_PWDN: out std_logic;
-		OV_RESET: out std_logic;
-		OV_XCLK: out std_logic
+		clk, clk100: in std_logic;
+		scl: out std_logic;
+		sda: inout std_logic;
+		xclk: out std_logic
 	);
 end entity;
 
 architecture ov_controller_a of ov_controller is
-	signal clk1400ns, tx_ed, en: std_logic;
+	signal clk25, clk1400ns, ed, en: std_logic;
 	signal config: std_logic_vector(15 downto 0);
 begin
-	OV_PWDN <= reset;
-	OV_RESET <= not reset;
-	OV_XCLK <= clk25;
+	xclk <= clk25;
 	
-	clk_divider_i: entity clk_divider generic map (
+	clk_divider_25_i: entity clk_divider generic map (
+		DIVIDER => 4
+	) port map (reset => reset, i => clk100, o => clk25);
+	clk_divider_1400ns_i: entity clk_divider generic map (
 		DIVIDER => 140
-	) port map (reset => reset, i => CLK100, o => clk1400ns);
+	) port map (reset => reset, i => clk100, o => clk1400ns);
 	
 	ov_sccb_i: entity ov_sccb port map (
 		reset => reset,
-		CLK100 => CLK100,
+		clk100 => clk100,
 		clk1400ns => clk1400ns,
 		addr => OV_ADDR,
 		d => config,
-		scl => OV_SIOC,
-		sda => OV_SIOD,
-		tx_ed => tx_ed,
+		scl => scl,
+		sda => sda,
+		ed => ed,
 		en => en
 	);
 	
 	ov_config_i: entity ov_config port map (
 		reset => reset,
-		CLK100 => CLK100,
-		tx_ed => tx_ed,
+		clk => clk,
+		tx_ed => ed,
 		config => config,
 		en => en
 	);

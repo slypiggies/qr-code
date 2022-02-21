@@ -22,23 +22,23 @@ entity vga is
 	port (
 		reset: in std_logic;
 		clk25: in std_logic;
-		VGA_R, VGA_G, VGA_B: out std_logic_vector(3 downto 0);
-		VGA_HS, VGA_VS: out std_logic;
+		r, g, b: out std_logic_vector(3 downto 0);
+		h_sync, v_sync: out std_logic;
 		addr: out unsigned(ADDR_LENGTH - 1 downto 0);
 		pixel: in unsigned(PIXEL_LENGTH - 1 downto 0)
 	);
 end entity;
 
 architecture vga_a of vga is
-	signal VGA_R_2: unsigned(VGA_R'range);
-	signal VGA_G_2: unsigned(VGA_G'range);
-	signal VGA_B_2: unsigned(VGA_B'range);
+	signal r_2: unsigned(r'range);
+	signal g_2: unsigned(g'range);
+	signal b_2: unsigned(b'range);
 	signal addr_2: unsigned(addr'range);
 	signal h_cnt, v_cnt: unsigned(addr'range);
 begin
-	VGA_R <= std_logic_vector(VGA_R_2);
-	VGA_G <= std_logic_vector(VGA_G_2);
-	VGA_B <= std_logic_vector(VGA_B_2);
+	r <= std_logic_vector(r_2);
+	g <= std_logic_vector(g_2);
+	b <= std_logic_vector(b_2);
 	addr <= addr_2;
 	process (all) begin
 		if reset = '1' then
@@ -58,37 +58,37 @@ begin
 			end if;
 			
 			if h_cnt >= to_unsigned(H + H_FRONT_PORCH, h_cnt'length) and h_cnt < to_unsigned(H + H_FRONT_PORCH + H_SYNC_PULSE, h_cnt'length) then
-				VGA_HS <= H_POLARITY;
+				h_sync <= H_POLARITY;
 			else
-				VGA_HS <= not H_POLARITY;
+				h_sync <= not H_POLARITY;
 			end if;
 			if v_cnt >= to_unsigned(V + V_FRONT_PORCH, v_cnt'length) and v_cnt < to_unsigned(V + V_FRONT_PORCH + V_SYNC_PULSE, v_cnt'length) then
-				VGA_VS <= V_POLARITY;
+				v_sync <= V_POLARITY;
 			else
-				VGA_VS <= not V_POLARITY;
+				v_sync <= not V_POLARITY;
 			end if;
 			
 			if h_cnt < to_unsigned(H, h_cnt'length) and v_cnt < to_unsigned(V, v_cnt'length) then
 				if USE_RGB565 then
-					VGA_R_2 <= pixel(pixel'left downto pixel'left - COLOR_LENGTH + 1);
-					VGA_G_2 <= pixel(pixel'left - COLOR_LENGTH downto pixel'right + COLOR_LENGTH);
-					VGA_B_2 <= pixel(pixel'right + COLOR_LENGTH - 1 downto pixel'right);
+					r_2 <= pixel(pixel'left downto pixel'left - COLOR_LENGTH + 1);
+					g_2 <= pixel(pixel'left - COLOR_LENGTH downto pixel'right + COLOR_LENGTH);
+					b_2 <= pixel(pixel'right + COLOR_LENGTH - 1 downto pixel'right);
 				else
-					if VGA_R_2'length = pixel'length then
-						VGA_R_2 <= pixel;
-						VGA_G_2 <= pixel;
-						VGA_B_2 <= pixel;
+					if r_2'length = pixel'length then
+						r_2 <= pixel;
+						g_2 <= pixel;
+						b_2 <= pixel;
 					else
-						VGA_R_2 <= pixel & (VGA_R_2'length - pixel'length downto 1 => '0');
-						VGA_G_2 <= pixel & (VGA_G_2'length - pixel'length downto 1 => '0');
-						VGA_B_2 <= pixel & (VGA_B_2'length - pixel'length downto 1 => '0');
+						r_2 <= pixel & (r_2'length - pixel'length downto 1 => '0');
+						g_2 <= pixel & (g_2'length - pixel'length downto 1 => '0');
+						b_2 <= pixel & (b_2'length - pixel'length downto 1 => '0');
 					end if;
 				end if;
 				addr_2 <= addr_2 + 1;
 			else
-				VGA_R_2 <= (others => '0');
-				VGA_G_2 <= (others => '0');
-				VGA_B_2 <= (others => '0');
+				r_2 <= (others => '0');
+				g_2 <= (others => '0');
+				b_2 <= (others => '0');
 				if v_cnt = to_unsigned(V, v_cnt'length) then
 					addr_2 <= (others => '0');
 				end if;

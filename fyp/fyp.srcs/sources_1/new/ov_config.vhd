@@ -8,7 +8,7 @@ use helper.all;
 entity ov_config is
 	port (
 		reset: in std_logic;
-		CLK100: in std_logic;
+		clk: in std_logic;
 		tx_ed: in std_logic;
 		config: out std_logic_vector(15 downto 0);
 		en: out std_logic
@@ -24,7 +24,7 @@ begin
 		if reset = '1' then
 			ed <= '0';
 			cnt <= (others => '0');
-		elsif rising_edge(CLK100) and tx_ed = '1' and ed = '0' then
+		elsif rising_edge(clk) and tx_ed = '1' and ed = '0' then
 			cnt <= cnt + 1;
 			if USE_RGB565 then
 				if cnt < to_unsigned(CONFIG_RGB565'length, cnt'length) then
@@ -32,7 +32,7 @@ begin
 				else
 					ed <= '1';
 				end if;
-			elsif NO_CONFIG then
+			elsif not USE_CONFIG then
 				ed <= '1';
 			else
 				if cnt < to_unsigned(CONFIG_Y'length, cnt'length) then

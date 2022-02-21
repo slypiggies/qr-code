@@ -19,8 +19,8 @@ package helper_tb is
 	constant PROCESSED_PIXEL_LENGTH: natural := PIXEL_LENGTH * 3;
 	constant BMP_HEADER_LENGTH: natural := 54;
 	constant BMP_PATH_PREFIX: string := "C:/Data/FYP/resources/";
-	constant BMP_FILE_R: string := "in.bmp";
-	constant BMP_FILE_W: string := "out.bmp";
+	constant BMP_FILE_NAME_R: string := "in.bmp";
+	constant BMP_FILE_NAME_W: string := "out.bmp";
 	
 	constant ADDR_S: std_logic_vector(7 downto 0) := X"42";
 	constant D_S: std_logic_vector(15 downto 0) := B"01010101_00110011";

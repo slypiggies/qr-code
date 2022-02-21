@@ -10,7 +10,7 @@ entity ov_sccb_tb is
 		d: in std_logic_vector(15 downto 0);
 		scl: out std_logic;
 		sda: inout std_logic;
-		tx_ed: out std_logic;
+		ed: out std_logic;
 		en: in std_logic
 	);
 end entity;
@@ -24,13 +24,13 @@ begin
 	
 	ov_sccb_i: entity ov_sccb port map (
 		reset => reset,
-		CLK100 => clk100,
+		clk100 => clk100,
 		clk1400ns => clk1400ns,
 		addr => addr,
 		d => d,
 		scl => scl,
 		sda => sda,
-		tx_ed => tx_ed,
+		ed => ed,
 		en => en
 	);
 end architecture;

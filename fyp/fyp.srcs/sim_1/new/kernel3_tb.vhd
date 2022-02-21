@@ -8,7 +8,7 @@ use helper.all;
 
 entity kernel3_tb is
 	port (
-		reset, clk100: in std_logic;
+		reset, clk: in std_logic;
 		addr_r, addr_w: out unsigned(ADDR_LENGTH - 1 downto 0);
 		pixel_r: in unsigned(PIXEL_LENGTH - 1 downto 0);
 		pixel_w: out unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
@@ -27,7 +27,7 @@ begin
 		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
 		reset => reset,
-		CLK100 => clk100,
+		clk => clk,
 		state => state,
 		addr_r => addr_r,
 		addr_w => addr_w,
@@ -39,7 +39,7 @@ begin
 		PROCESSED_PIXEL_LENGTH => PROCESSED_PIXEL_LENGTH,
 		THRESHOLD => THRESHOLD
 	) port map (
-		CLK100 => clk100,
+		clk => clk,
 		state => state,
 		pixel_r => pixel_r,
 		pixel_w => pixel_w

@@ -5,7 +5,7 @@ use numeric_std.all;
 
 entity debouncer is
 	port (
-		CLK100: in std_logic;
+		clk: in std_logic;
 		i: in std_logic;
 		o: out std_logic
 	);
@@ -18,7 +18,7 @@ begin
 		'1' when cnt = (cnt'range => '1')
 		else '0';
 	process (all) begin
-		if rising_edge(CLK100) then
+		if rising_edge(clk) then
 			if i = '1' then
 				if cnt < (cnt'range => '1') then
 					cnt <= cnt + 1;

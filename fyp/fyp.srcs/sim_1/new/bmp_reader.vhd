@@ -5,21 +5,21 @@ use helper_tb.all;
 
 entity bmp_reader is
 	generic (
-		BMP_FILE: string
+		FILE_NAME: string
 	);
 	port (
-		bmp_header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
+		header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
 		pixels: out character_array_t(0 to H * V - 1);
-		rx_ed: out boolean
+		ed: out boolean
 	);
 end entity;
 
 architecture bmp_reader_a of bmp_reader is
-	signal rx_ed_2: boolean := false;
+	signal ed_2: boolean := false;
 begin
-	rx_ed <= rx_ed_2;
+	ed <= ed_2;
 	process
-		file bmp: file_t open read_mode is BMP_PATH_PREFIX & BMP_FILE;
+		file bmp: file_t open read_mode is BMP_PATH_PREFIX & FILE_NAME;
 		function to_natural(bytes: character_array_t(0 to 3)) return natural is begin
 			return
 				character'pos(bytes(0)) +
@@ -30,7 +30,7 @@ begin
 		function to_natural_2(bytes: character_array_t(0 to 1)) return natural is begin
 			return to_natural(bytes & character'val(0) & character'val(0));
 		end function;
-		alias bh: character_array_t(bmp_header'range) is bmp_header;
+		alias bh: character_array_t(header'range) is header;
 		variable tmp: character;
 	begin
 		for i in bh'range loop
@@ -54,7 +54,7 @@ begin
 			read(bmp, tmp); -- G.
 			read(bmp, tmp); -- R.
 		end loop;
-		rx_ed_2 <= true;
+		ed_2 <= true;
 		file_close(bmp);
 		wait;
 	end process;

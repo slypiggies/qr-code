@@ -7,14 +7,14 @@ use helper.all;
 
 entity fake_frame_buffer_y_out is
 	generic (
-		BMP_FILE: string
+		BMP_FILE_NAME: string
 	);
 	port (
 		bmp_header: in character_array_t(0 to BMP_HEADER_LENGTH - 1);
 		processed: in boolean;
 		addr: in unsigned(ADDR_LENGTH - 1 downto 0);
 		pixel: in unsigned(PIXEL_LENGTH - 1 downto 0);
-		tx_ed: out boolean
+		ed: out boolean
 	);
 end entity;
 
@@ -27,11 +27,11 @@ begin
 	end process;
 	
 	bmp_writer_i: entity bmp_writer generic map (
-		BMP_FILE => BMP_FILE
+		FILE_NAME => BMP_FILE_NAME
 	) port map (
-		bmp_header => bmp_header,
+		header => bmp_header,
 		processed => processed,
 		pixels => pixels,
-		tx_ed => tx_ed
+		ed => ed
 	);
 end architecture;

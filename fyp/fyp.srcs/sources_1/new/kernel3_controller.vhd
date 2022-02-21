@@ -10,7 +10,7 @@ entity kernel3_controller is
 	);
 	port (
 		reset: in std_logic;
-		CLK100: in std_logic;
+		clk: in std_logic;
 		state: out unsigned(3 downto 0);
 		addr_r, addr_w: out unsigned(ADDR_LENGTH - 1 downto 0);
 		we: out std_logic
@@ -49,19 +49,19 @@ architecture kernel3_controller_a of kernel3_controller is
 	);
 begin
 	process (all)
-		variable h_cnt_2: unsigned(h_cnt'range);
-		variable v_cnt_2: unsigned(v_cnt'range);
+		variable h_cnt_new: unsigned(h_cnt'range);
+		variable v_cnt_new: unsigned(v_cnt'range);
 		variable addr_r_2: unsigned(addr_r'length * 2 - 1 downto 0);
 	begin
-		h_cnt_2 := h_cnt + DY(to_integer(state_2));
-		v_cnt_2 := v_cnt + DX(to_integer(state_2));
-		if h_cnt_2 >= to_unsigned(H, h_cnt_2'length) then
-			h_cnt_2 := h_cnt;
+		h_cnt_new := h_cnt + DY(to_integer(state_2));
+		v_cnt_new := v_cnt + DX(to_integer(state_2));
+		if h_cnt_new >= to_unsigned(H, h_cnt_new'length) then
+			h_cnt_new := h_cnt;
 		end if;
-		if v_cnt_2 >= to_unsigned(V, v_cnt_2'length) then
-			v_cnt_2 := v_cnt;
+		if v_cnt_new >= to_unsigned(V, v_cnt_new'length) then
+			v_cnt_new := v_cnt;
 		end if;
-		addr_r_2 := v_cnt_2 * to_unsigned(H, v_cnt_2'length) + h_cnt_2;
+		addr_r_2 := v_cnt_new * to_unsigned(H, v_cnt_new'length) + h_cnt_new;
 		addr_r <= addr_r_2(addr_r'range);
 	end process;
 	state <= state_2;
@@ -74,7 +74,7 @@ begin
 			we <= '0';
 			h_cnt <= (others => '0');
 			v_cnt <= (others => '0');
-		elsif rising_edge(CLK100) then
+		elsif rising_edge(clk) then
 			addr_w_3 <= addr_w_2; -- 1 clock delay for `kernel3_convolutor`.
 			if state_2 < X"8" then
 				state_2 <= state_2 + 1;

@@ -13,14 +13,13 @@ architecture fyp_tb_a of fyp_tb is
 	signal clk100: std_logic := '1';
 	signal reset: std_logic := '1';
 	
-	signal scl, sda, tx_ed: std_logic;
-	signal addr_r, addr_w: unsigned(ADDR_LENGTH - 1 downto 0);
+	signal scl, sda, ed: std_logic;
+	signal addr_r, addr_w, addr_r_2, addr_w_2: unsigned(ADDR_LENGTH - 1 downto 0);
 	signal pixel_w: unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
 	signal we: std_logic;
 	signal bmp_header: character_array_t(0 to BMP_HEADER_LENGTH - 1);
-	signal rx_ed, processed, tx_ed_2: boolean := false;
-	signal addr_2, addr_3: unsigned(ADDR_LENGTH - 1 downto 0);
-	signal pixel, pixel_2: unsigned(PIXEL_LENGTH - 1 downto 0);
+	signal ed_2, processed, ed_3: boolean := false;
+	signal pixel_r_2, pixel_w_2: unsigned(PIXEL_LENGTH - 1 downto 0);
 	signal we_2: std_logic;
 begin
 	check_assertions;
@@ -44,7 +43,7 @@ begin
 			d => D_S,
 			scl => scl,
 			sda => sda,
-			tx_ed => tx_ed,
+			ed => ed,
 			en => '1'
 		);
 	end generate;
@@ -52,7 +51,7 @@ begin
 	ENABLE_KERNEL3_TB_if: if ENABLE_KERNEL3_TB generate
 		kernel3_tb_i: entity kernel3_tb port map (
 			reset => reset,
-			clk100 => clk100,
+			clk => clk100,
 			addr_r => addr_r,
 			addr_w => addr_w,
 			pixel_r => PIXEL_R_S,
@@ -67,12 +66,12 @@ begin
 		assert not USE_RGB565 severity failure;
 		
 		fake_frame_buffer_y_in_i: entity fake_frame_buffer_y_in generic map (
-			BMP_FILE => BMP_FILE_R
+			BMP_FILE_NAME => BMP_FILE_NAME_R
 		) port map (
 			bmp_header => bmp_header,
-			rx_ed => rx_ed,
-			addr => addr_2,
-			pixel => pixel
+			ed => ed_2,
+			addr => addr_r_2,
+			pixel => pixel_r_2
 		);
 		
 		sobel_i: entity sobel generic map (
@@ -81,34 +80,34 @@ begin
 			ADDR_LENGTH => ADDR_LENGTH
 		) port map (
 			reset => reset,
-			CLK100 => clk100,
-			addr_r => addr_2,
-			addr_w => addr_3,
-			pixel_r => pixel,
-			pixel_w => pixel_2,
+			clk => clk100,
+			addr_r => addr_r_2,
+			addr_w => addr_w_2,
+			pixel_r => pixel_r_2,
+			pixel_w => pixel_w_2,
 			we => we_2
 		);
 		
 		fake_frame_buffer_y_out_i: entity fake_frame_buffer_y_out generic map (
-			BMP_FILE => BMP_FILE_W
+			BMP_FILE_NAME => BMP_FILE_NAME_W
 		) port map (
 			bmp_header => bmp_header,
 			processed => processed,
-			addr => addr_3,
-			pixel => pixel_2,
-			tx_ed => tx_ed_2
+			addr => addr_w_2,
+			pixel => pixel_w_2,
+			ed => ed_3
 		);
 		
 		process begin
 			wait for 1 ps;
-			assert rx_ed severity failure;
+			assert ed_2 severity failure;
 			for i in 1 to H * V loop
 				wait until we_2 = '1';
 				wait until we_2 = '0';
 			end loop;
 			processed <= true;
 			wait for 1 ps;
-			assert tx_ed_2 severity failure;
+			assert ed_3 severity failure;
 			wait;
 		end process;
 	end generate;

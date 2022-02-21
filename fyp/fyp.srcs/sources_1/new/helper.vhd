@@ -6,7 +6,7 @@ use std_logic_1164.all;
 package helper is
 	constant ENABLE_PROCESSING: boolean := true;
 	constant USE_RGB565: boolean := false;
-	constant NO_CONFIG: boolean := false;
+	constant USE_CONFIG: boolean := true;
 	
 	constant COLOR_LENGTH: natural := 4;
 	constant PIXEL_LENGTH: natural := COLOR_LENGTH * (boolean'pos(USE_RGB565) * 2 + 1);
@@ -14,7 +14,7 @@ package helper is
 	function cnt_bit(i: natural) return natural;
 	procedure assert_synth(i: boolean);
 	constant ASSERTIONS: boolean_vector(0 to 1) := (
-		not USE_RGB565 or (USE_RGB565 and not NO_CONFIG),
+		not USE_RGB565 or (USE_RGB565 and USE_CONFIG),
 		COLOR_LENGTH <= 4 -- Limited by the DAC of VGA.
 	);
 	procedure check_assertions;

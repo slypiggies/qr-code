@@ -12,7 +12,7 @@ entity kernel3_convolutor is
 		THRESHOLD: natural
 	);
 	port (
-		CLK100: in std_logic;
+		clk: in std_logic;
 		state: in unsigned(3 downto 0);
 		pixel_r: in unsigned(PIXEL_LENGTH - 1 downto 0);
 		pixel_w: out unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0)
@@ -38,7 +38,7 @@ begin
 	begin
 		product := signed("0" & pixel_r) * to_signed(KERNEL(to_integer(state)), pixel_r'length + 1);
 		product_2 := (product_2'left downto product'left + 1 => product(product'left)) & product;
-		if rising_edge(CLK100) then
+		if rising_edge(clk) then
 			if state = X"0" then
 				sum <= product_2;
 			else

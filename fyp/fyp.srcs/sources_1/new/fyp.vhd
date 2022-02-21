@@ -41,7 +41,7 @@ architecture fyp_a of fyp is
 	
 	constant ADDR_LENGTH: natural := cnt_bit(H * V);
 	
-	signal BTNC_2: std_logic;
+	signal reset: std_logic;
 	signal clk25: std_logic;
 	signal we, we_2: std_logic;
 	signal addr_w, addr_r, addr_w_2, addr_r_2: unsigned(ADDR_LENGTH - 1 downto 0);
@@ -72,31 +72,32 @@ architecture fyp_a of fyp is
 begin
 	check_assertions;
 	
-	debouncer_i: entity debouncer port map (CLK100 => CLK100, i => BTNC, o => BTNC_2);
+	debouncer_i: entity debouncer port map (clk => CLK100, i => BTNC, o => reset);
+	
+	OV_PWDN <= reset;
+	OV_RESET <= not reset;
 	
 	clk_divider_i: entity clk_divider generic map (
 		DIVIDER => 4
-	) port map (reset => BTNC_2, i => CLK100, o => clk25);
+	) port map (reset => reset, i => CLK100, o => clk25);
 	
 	ov_controller_i: entity ov_controller port map (
-		reset => BTNC_2,
-		CLK100 => CLK100,
-		clk25 => clk25,
-		OV_SIOC => OV_SIOC,
-		OV_SIOD => OV_SIOD,
-		OV_PWDN => OV_PWDN,
-		OV_RESET => OV_RESET,
-		OV_XCLK => OV_XCLK
+		reset => reset,
+		clk => CLK100,
+		clk100 => CLK100,
+		scl => OV_SIOC,
+		sda => OV_SIOD,
+		xclk => OV_XCLK
 	);
 	
 	ov_capturer_i: entity ov_capturer generic map (
 		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
-		reset => BTNC_2,
-		OV_PCLK => OV_PCLK,
-		OV_HREF => OV_HREF,
-		OV_VSYNC => OV_VSYNC,
-		OV_D => OV_D,
+		reset => reset,
+		pclk => OV_PCLK,
+		h_sync => OV_HREF,
+		v_sync => OV_VSYNC,
+		d => OV_D,
 		we => we,
 		addr => addr_w,
 		pixel => pixel_w
@@ -120,8 +121,8 @@ begin
 			V => V,
 			ADDR_LENGTH => ADDR_LENGTH
 		) port map (
-			reset => BTNC_2,
-			CLK100 => CLK100,
+			reset => reset,
+			clk => CLK100,
 			addr_r => addr_r_2,
 			addr_w => addr_w_2,
 			pixel_r => pixel_r_2,
@@ -178,13 +179,13 @@ begin
 		V_POLARITY => V_POLARITY,
 		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
-		reset => BTNC_2,
+		reset => reset,
 		clk25 => clk25,
-		VGA_R => VGA_R,
-		VGA_G => VGA_G,
-		VGA_B => VGA_B,
-		VGA_HS => VGA_HS,
-		VGA_VS => VGA_VS,
+		r => VGA_R,
+		g => VGA_G,
+		b => VGA_B,
+		h_sync => VGA_HS,
+		v_sync => VGA_VS,
 		addr => addr_r,
 		pixel => pixel_r
 	);

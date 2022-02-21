@@ -10,18 +10,18 @@ use helper.all;
 entity ov_sccb is
 	port (
 		reset: in std_logic;
-		CLK100, clk1400ns: in std_logic;
+		clk100, clk1400ns: in std_logic;
 		addr: in std_logic_vector(7 downto 0);
 		d: in std_logic_vector(15 downto 0);
 		scl: out std_logic;
 		sda: inout std_logic;
-		tx_ed: out std_logic;
+		ed: out std_logic;
 		en: in std_logic
 	);
 end entity;
 
 architecture ov_sccb_a of ov_sccb is
-	signal tx_ed_2, sda_2, o, t_2: std_logic;
+	signal ed_2, sda_2, o, t: std_logic;
 	signal d_2: std_logic_vector(23 downto 0);
 	type state_t is (Q_0, Q_1, Q_2, Q_3, Q_D, Q_4, Q_5, Q_6);
 	signal state: state_t;
@@ -33,14 +33,14 @@ begin
 		i => sda_2,
 		o => o,
 		io => sda,
-		t => t_2
+		t => t
 	);
-	tx_ed <= tx_ed_2;
+	ed <= ed_2;
 	
 	process (all) begin
-		t_2 <= '0';
+		t <= '0';
 		if reset = '1' then
-			tx_ed_2 <= '0';
+			ed_2 <= '0';
 			state <= Q_0;
 			clk_cnt <= "00";
 			bit_cnt <= X"0";
@@ -48,13 +48,13 @@ begin
 			clk1400ns_prev <= '0';
 			scl <= '1';
 			sda_2 <= '1';
-		elsif rising_edge(CLK100) then
+		elsif rising_edge(clk100) then
 			clk1400ns_prev <= clk1400ns;
 			if state = Q_0 and en = '1' then
-				if tx_ed_2 = '0' then
-					tx_ed_2 <= '1';
+				if ed_2 = '0' then
+					ed_2 <= '1';
 				else
-					tx_ed_2 <= '0';
+					ed_2 <= '0';
 					d_2 <= addr & d;
 					state <= Q_1;
 					clk_cnt <= "00";
@@ -90,7 +90,7 @@ begin
 								sda_2 <= d_2(d_2'left);
 								d_2 <= d_2(d_2'left - 1 downto 0) & '0';
 							else
-								t_2 <= '1';
+								t <= '1';
 							end if;
 						else
 							state <= Q_4;
