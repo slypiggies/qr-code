@@ -94,7 +94,7 @@ begin
 		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
 		reset => reset,
-		pclk => OV_PCLK,
+		clk => OV_PCLK,
 		h_sync => OV_HREF,
 		v_sync => OV_VSYNC,
 		d => OV_D,

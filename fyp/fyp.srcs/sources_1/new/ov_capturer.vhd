@@ -11,7 +11,7 @@ entity ov_capturer is
 	);
 	port (
 		reset: in std_logic;
-		pclk, h_sync, v_sync: in std_logic;
+		clk, h_sync, v_sync: in std_logic;
 		d: in std_logic_vector(7 downto 0);
 		we: out std_logic;
 		addr: out unsigned(ADDR_LENGTH - 1 downto 0);
@@ -37,7 +37,7 @@ begin
 		if reset = '1' or v_sync = '1' then
 			we_2 <= '1';
 			addr_2 <= (others => '1');
-		elsif rising_edge(pclk) and h_sync = '1' then
+		elsif rising_edge(clk) and h_sync = '1' then
 			we_2 <= not we_2;
 			d_2 <= d_2(7 downto 0) & d;
 			if we_2 = '0' then
