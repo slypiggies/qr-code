@@ -4,6 +4,7 @@ use std_logic_1164.all;
 use numeric_std.all;
 use work.all;
 use helper.all;
+use helper_synth.all;
 
 entity fyp is
 	port (
@@ -27,20 +28,6 @@ entity fyp is
 end entity;
 
 architecture fyp_a of fyp is
-	constant H: natural := 640;
-	constant H_FRONT_PORCH: natural := 16;
-	constant H_SYNC_PULSE: natural := 96;
-	constant H_BACK_PORCH: natural := 48;
-	constant H_POLARITY: std_logic := '0';
-	
-	constant V: natural := 480;
-	constant V_FRONT_PORCH: natural := 10;
-	constant V_SYNC_PULSE: natural := 2;
-	constant V_BACK_PORCH: natural := 33;
-	constant V_POLARITY: std_logic := '0';
-	
-	constant ADDR_LENGTH: natural := cnt_bit(H * V);
-	
 	signal reset: std_logic;
 	signal clk25: std_logic;
 	signal we, we_2: std_logic;
@@ -180,7 +167,7 @@ begin
 		ADDR_LENGTH => ADDR_LENGTH
 	) port map (
 		reset => reset,
-		clk25 => clk25,
+		clk => clk25,
 		r => VGA_R,
 		g => VGA_G,
 		b => VGA_B,

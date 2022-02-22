@@ -21,7 +21,7 @@ entity vga is
 	);
 	port (
 		reset: in std_logic;
-		clk25: in std_logic;
+		clk: in std_logic;
 		r, g, b: out std_logic_vector(3 downto 0);
 		h_sync, v_sync: out std_logic;
 		addr: out unsigned(ADDR_LENGTH - 1 downto 0);
@@ -45,7 +45,7 @@ begin
 			addr_2 <= (others => '0');
 			h_cnt <= (others => '0');
 			v_cnt <= (others => '0');
-		elsif rising_edge(clk25) then
+		elsif rising_edge(clk) then
 			if h_cnt < to_unsigned(H + H_FRONT_PORCH + H_SYNC_PULSE + H_BACK_PORCH - 1, h_cnt'length) then
 				h_cnt <= h_cnt + 1;
 			else
