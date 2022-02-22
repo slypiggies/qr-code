@@ -1,6 +1,0 @@
-# compile vhdl design source files
-vhdl xil_defaultlib  \
-"../../../../fyp.srcs/sim_1/new/a.vhd" \
-
-# Do not sort compile order
-nosort
