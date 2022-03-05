@@ -46,4 +46,8 @@ begin
 			clk => clk100
 		);
 	end generate;
+	
+	ENABLE_FRAME_BUFFER_Y_TB_if: if ENABLE_FRAME_BUFFER_Y_TB generate
+		frame_buffer_y_tb_i: entity frame_buffer_y_tb port map (clk => clk100);
+	end generate;
 end architecture;

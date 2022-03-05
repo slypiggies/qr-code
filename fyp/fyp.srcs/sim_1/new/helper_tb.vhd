@@ -8,7 +8,8 @@ use helper.all;
 package helper_tb is
 	constant ENABLE_OV_SCCB_TB: boolean := false;
 	constant ENABLE_KERNEL3_TB: boolean := false;
-	constant ENABLE_PROCESSING_TB: boolean := true;
+	constant ENABLE_PROCESSING_TB: boolean := false;
+	constant ENABLE_FRAME_BUFFER_Y_TB: boolean := false;
 	
 	type character_array_t is array(natural range <>) of character;
 	type file_t is file of character;
