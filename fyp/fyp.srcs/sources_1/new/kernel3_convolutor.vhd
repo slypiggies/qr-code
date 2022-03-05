@@ -8,7 +8,7 @@ use helper.all;
 entity kernel3_convolutor is
 	generic (
 		KERNEL: integer_vector(0 to 8);
-		PROCESSED_PIXEL_LENGTH: natural;
+		PROCESSED_PIXEL_LENGTH: positive;
 		THRESHOLD: natural
 	);
 	port (

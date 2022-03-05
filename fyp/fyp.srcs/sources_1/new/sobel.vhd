@@ -7,8 +7,8 @@ use helper.all;
 
 entity sobel is
 	generic (
-		H, V: natural;
-		ADDR_LENGTH: natural
+		H, V: positive;
+		ADDR_LENGTH: positive
 	);
 	port (
 		reset: in std_logic;
@@ -23,7 +23,7 @@ end entity;
 architecture sobel_a of sobel is
 	constant KERNEL_X: integer_vector(0 to 8) := (1, 0, -1, 2, 0, -2, 1, 0, -1);
 	constant KERNEL_Y: integer_vector(0 to 8) := (1, 2, 1, 0, 0, 0, -1, -2, -1);
-	constant PROCESSED_PIXEL_LENGTH: natural := PIXEL_LENGTH * 3;
+	constant PROCESSED_PIXEL_LENGTH: positive := PIXEL_LENGTH * 3;
 	constant THRESHOLD: natural := 4;
 	signal state: unsigned(3 downto 0);
 	signal pixel_w_x, pixel_w_y: unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);

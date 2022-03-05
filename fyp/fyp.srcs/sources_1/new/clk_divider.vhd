@@ -17,7 +17,7 @@ entity clk_divider is
 end entity;
 
 architecture clk_divider_a of clk_divider is
-	constant N: natural := DIVIDER / 2;
+	constant N: positive := DIVIDER / 2;
 	signal cnt: unsigned(cnt_bit(N) - 1 downto 0);
 	signal o_2: std_logic;
 begin

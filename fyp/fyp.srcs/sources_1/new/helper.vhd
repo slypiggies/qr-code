@@ -8,10 +8,10 @@ package helper is
 	constant USE_RGB565: boolean := false;
 	constant USE_CONFIG: boolean := true;
 	
-	constant COLOR_LENGTH: natural := 4;
-	constant PIXEL_LENGTH: natural := COLOR_LENGTH * (boolean'pos(USE_RGB565) * 2 + 1);
+	constant COLOR_LENGTH: positive := 4;
+	constant PIXEL_LENGTH: positive := COLOR_LENGTH * (boolean'pos(USE_RGB565) * 2 + 1);
 	constant OV_ADDR: std_logic_vector(7 downto 0) := X"42";
-	function cnt_bit(i: natural) return natural;
+	function cnt_bit(i: positive) return positive;
 	procedure assert_synth(i: boolean);
 	constant ASSERTIONS: boolean_vector(0 to 1) := (
 		not USE_RGB565 or (USE_RGB565 and USE_CONFIG),
@@ -363,8 +363,8 @@ package helper is
 end package;
 
 package body helper is
-	function cnt_bit(i: natural) return natural is begin
-		return natural(floor(log2(real(i)))) + 1;
+	function cnt_bit(i: positive) return positive is begin
+		return positive(floor(log2(real(i)))) + 1;
 	end function;
 	
 	procedure assert_synth_2(i: positive) is begin end procedure;

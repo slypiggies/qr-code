@@ -7,17 +7,17 @@ use helper.all;
 
 entity vga is
 	generic (
-		H: natural;
-		H_FRONT_PORCH: natural;
-		H_SYNC_PULSE: natural;
-		H_BACK_PORCH: natural;
+		H: positive;
+		H_FRONT_PORCH: positive;
+		H_SYNC_PULSE: positive;
+		H_BACK_PORCH: positive;
 		H_POLARITY: std_logic;
-		V: natural;
-		V_FRONT_PORCH: natural;
-		V_SYNC_PULSE: natural;
-		V_BACK_PORCH: natural;
+		V: positive;
+		V_FRONT_PORCH: positive;
+		V_SYNC_PULSE: positive;
+		V_BACK_PORCH: positive;
 		V_POLARITY: std_logic;
-		ADDR_LENGTH: natural
+		ADDR_LENGTH: positive
 	);
 	port (
 		reset: in std_logic;

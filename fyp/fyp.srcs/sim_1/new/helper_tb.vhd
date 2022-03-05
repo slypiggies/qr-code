@@ -13,11 +13,11 @@ package helper_tb is
 	type character_array_t is array(natural range <>) of character;
 	type file_t is file of character;
 	
-	constant H: natural := 640;
-	constant V: natural := 480;
-	constant ADDR_LENGTH: natural := cnt_bit(H * V);
-	constant PROCESSED_PIXEL_LENGTH: natural := PIXEL_LENGTH * 3;
-	constant BMP_HEADER_LENGTH: natural := 54;
+	constant H: positive := 640;
+	constant V: positive := 480;
+	constant ADDR_LENGTH: positive := cnt_bit(H * V);
+	constant PROCESSED_PIXEL_LENGTH: positive := PIXEL_LENGTH * 3;
+	constant BMP_HEADER_LENGTH: positive := 54;
 	constant BMP_PATH_PREFIX: string := "C:/Data/FYP/resources/";
 	constant BMP_FILE_NAME_R: string := "in.bmp";
 	constant BMP_FILE_NAME_W: string := "out.bmp";

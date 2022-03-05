@@ -5,8 +5,8 @@ use numeric_std.all;
 
 entity kernel3_controller is
 	generic (
-		H, V: natural;
-		ADDR_LENGTH: natural
+		H, V: positive;
+		ADDR_LENGTH: positive
 	);
 	port (
 		reset: in std_logic;

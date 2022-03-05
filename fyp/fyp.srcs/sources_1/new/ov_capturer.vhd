@@ -7,7 +7,7 @@ use helper.all;
 
 entity ov_capturer is
 	generic (
-		ADDR_LENGTH: natural
+		ADDR_LENGTH: positive
 	);
 	port (
 		reset: in std_logic;
