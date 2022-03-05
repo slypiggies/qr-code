@@ -8,11 +8,7 @@ use helper.all;
 
 entity kernel3_tb is
 	port (
-		reset, clk: in std_logic;
-		addr_r, addr_w: out unsigned(ADDR_LENGTH - 1 downto 0);
-		pixel_r: in unsigned(PIXEL_LENGTH - 1 downto 0);
-		pixel_w: out unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
-		we: out std_logic
+		reset, clk: in std_logic
 	);
 end entity;
 
@@ -20,6 +16,9 @@ architecture kernel3_tb_a of kernel3_tb is
 	constant KERNEL: integer_vector(0 to 8) := (-1, -2, -1, 0, 0, 0, 0, 0, 0);
 	constant THRESHOLD: natural := 16;
 	signal state: unsigned(3 downto 0);
+	signal addr_r, addr_w: unsigned(ADDR_LENGTH - 1 downto 0);
+	signal pixel_w: unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
+	signal we: std_logic;
 begin
 	kernel3_controller_i: entity kernel3_controller generic map (
 		H => H,
@@ -41,7 +40,7 @@ begin
 	) port map (
 		clk => clk,
 		state => state,
-		pixel_r => pixel_r,
+		pixel_r => PIXEL_R_S,
 		pixel_w => pixel_w
 	);
 end architecture;

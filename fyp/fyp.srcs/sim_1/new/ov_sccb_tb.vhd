@@ -2,21 +2,17 @@ library ieee;
 use ieee.all;
 use std_logic_1164.all;
 use work.all;
+use helper_tb.all;
 
 entity ov_sccb_tb is
 	port (
-		reset, clk100: in std_logic;
-		addr: in std_logic_vector(7 downto 0);
-		d: in std_logic_vector(15 downto 0);
-		scl: out std_logic;
-		sda: inout std_logic;
-		ed: out std_logic;
-		en: in std_logic
+		reset, clk100: in std_logic
 	);
 end entity;
 
 architecture ov_sccb_tb_a of ov_sccb_tb is
 	signal clk1400ns: std_logic;
+	signal scl, sda, ed: std_logic;
 begin
 	clk_divider_i: entity clk_divider generic map (
 		DIVIDER => 140
@@ -26,11 +22,11 @@ begin
 		reset => reset,
 		clk100 => clk100,
 		clk1400ns => clk1400ns,
-		addr => addr,
-		d => d,
+		addr => ADDR_S,
+		d => D_S,
 		scl => scl,
 		sda => sda,
 		ed => ed,
-		en => en
+		en => '1'
 	);
 end architecture;
