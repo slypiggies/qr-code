@@ -13,8 +13,6 @@ entity kernel3_tb is
 end entity;
 
 architecture kernel3_tb_a of kernel3_tb is
-	constant KERNEL: integer_vector(0 to 8) := (-1, -2, -1, 0, 0, 0, 0, 0, 0);
-	constant THRESHOLD: natural := 16;
 	signal state: unsigned(3 downto 0);
 	signal addr_r, addr_w: unsigned(ADDR_LENGTH - 1 downto 0);
 	signal pixel_w: unsigned(PROCESSED_PIXEL_LENGTH - 1 downto 0);
@@ -34,9 +32,9 @@ begin
 	);
 	
 	kernel3_convolutor_i: entity kernel3_convolutor generic map (
-		KERNEL => KERNEL,
+		KERNEL => KERNEL_S,
 		PROCESSED_PIXEL_LENGTH => PROCESSED_PIXEL_LENGTH,
-		THRESHOLD => THRESHOLD
+		THRESHOLD => THRESHOLD_S
 	) port map (
 		clk => clk,
 		state => state,

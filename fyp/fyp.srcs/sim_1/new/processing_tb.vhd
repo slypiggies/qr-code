@@ -57,14 +57,14 @@ begin
 	);
 	
 	process begin
-		wait for 1 ps;
+		wait for 1 ps; -- Wait for reading the file.
 		assert ed severity failure;
 		for i in 1 to H * V loop
 			wait until we = '1';
 			wait until we = '0';
 		end loop;
 		processed <= true;
-		wait for 1 ps;
+		wait for 1 ps; -- Wait for writing the file.
 		assert ed_2 severity failure;
 		wait;
 	end process;

@@ -50,4 +50,18 @@ begin
 	ENABLE_FRAME_BUFFER_Y_TB_if: if ENABLE_FRAME_BUFFER_Y_TB generate
 		frame_buffer_y_tb_i: entity frame_buffer_y_tb port map (clk => clk100);
 	end generate;
+	
+	ENABLE_DELAYER_TB_if: if ENABLE_DELAYER_TB generate
+		delayer_tb_i: entity delayer_tb port map (
+			reset => reset,
+			clk => clk100
+		);
+	end generate;
+	
+	ENABLE_ENABLE_AGGREGATOR_TB_if: if ENABLE_AGGREGATOR_TB generate
+		aggregator_tb_i: entity aggregator_tb port map (
+			reset => reset,
+			clk => clk100
+		);
+	end generate;
 end architecture;

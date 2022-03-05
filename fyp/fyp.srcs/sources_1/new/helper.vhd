@@ -11,6 +11,7 @@ package helper is
 	constant COLOR_LENGTH: positive := 4;
 	constant PIXEL_LENGTH: positive := COLOR_LENGTH * (boolean'pos(USE_RGB565) * 2 + 1);
 	constant OV_ADDR: std_logic_vector(7 downto 0) := X"42";
+	constant FRAME_BUFFER_DELAY: positive := 2;
 	function cnt_bit(i: positive) return positive;
 	procedure assert_synth(i: boolean);
 	constant ASSERTIONS: boolean_vector(0 to 1) := (
