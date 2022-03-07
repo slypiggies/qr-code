@@ -33,7 +33,7 @@ architecture aggregator_a of aggregator is
 begin
 	delayer_h_i: entity delayer generic map (
 		DELAY => FRAME_BUFFER_DELAY,
-		LENGTH => h_cnt'length
+		LENGTH => h_cnt_2'length
 	) port map (
 		reset => reset,
 		clk => clk,
@@ -43,7 +43,7 @@ begin
 	);
 	delayer_v_i: entity delayer generic map (
 		DELAY => FRAME_BUFFER_DELAY,
-		LENGTH => v_cnt'length
+		LENGTH => v_cnt_2'length
 	) port map (
 		reset => reset,
 		clk => clk,

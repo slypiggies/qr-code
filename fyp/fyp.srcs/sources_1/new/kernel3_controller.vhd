@@ -2,6 +2,7 @@ library ieee;
 use ieee.all;
 use std_logic_1164.all;
 use numeric_std.all;
+use work.all;
 
 entity kernel3_controller is
 	generic (
@@ -65,6 +66,18 @@ begin
 		addr_r <= addr_r_2(addr_r'range);
 	end process;
 	state <= state_2;
+	
+	-- Delay to match `kernel3_convolutor`.
+	delayer_i: entity delayer generic map (
+		DELAY => 1,
+		LENGTH => addr_w_2'length
+	) port map (
+		reset => reset,
+		clk => clk,
+		i => addr_w_2,
+		o => addr_w_3,
+		we => open
+	);
 	addr_w <= addr_w_3;
 	
 	process (all) begin
@@ -75,7 +88,6 @@ begin
 			h_cnt <= (others => '0');
 			v_cnt <= (others => '0');
 		elsif rising_edge(clk) then
-			addr_w_3 <= addr_w_2; -- 1 clock delay for `kernel3_convolutor`.
 			if state_2 < X"8" then
 				state_2 <= state_2 + 1;
 				we <= '0';
