@@ -21,7 +21,7 @@ entity ov_sccb is
 end entity;
 
 architecture ov_sccb_a of ov_sccb is
-	signal ed_2, sda_2, o, t: std_logic;
+	signal ed_2, sda_2, t: std_logic;
 	signal d_2: std_logic_vector(23 downto 0);
 	type state_t is (Q_0, Q_1, Q_2, Q_3, Q_D, Q_4, Q_5, Q_6);
 	signal state: state_t;
@@ -31,7 +31,7 @@ architecture ov_sccb_a of ov_sccb is
 begin
 	iobuf_i: vcomponents.iobuf port map (
 		i => sda_2,
-		o => o,
+		o => open,
 		io => sda,
 		t => t
 	);

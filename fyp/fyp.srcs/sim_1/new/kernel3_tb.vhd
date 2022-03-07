@@ -4,7 +4,6 @@ use std_logic_1164.all;
 use numeric_std.all;
 use work.all;
 use helper_tb.all;
-use helper.all;
 
 entity kernel3_tb is
 	port (
