@@ -1,1 +1,0 @@
--wto "06a9eb38ad844bce8014224215b729c1" --incr --debug "typical" --relax --mt "2" -L "xil_defaultlib" -L "secureip" -L "xpm" --snapshot "ov_sccb_tb_behav" "xil_defaultlib.ov_sccb_tb" -log "elaborate.log" 
