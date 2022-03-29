@@ -17,6 +17,9 @@ end entity;
 architecture bmp_reader_a of bmp_reader is
 	signal ed_2: boolean := false;
 begin
+	assert H mod 4 = 0 severity failure;
+	assert V mod 4 = 0 severity failure;
+	
 	ed <= ed_2;
 	process
 		file bmp: file_t open read_mode is BMP_PATH_PREFIX & FILE_NAME;
@@ -48,7 +51,8 @@ begin
 			to_natural(bh(30 to 33)) = 0 and
 			to_natural(bh(34 to 37)) = H * V * 3 and
 			to_natural(bh(46 to 49)) = 0 and
-			to_natural(bh(50 to 53)) = 0 severity failure;
+			to_natural(bh(50 to 53)) = 0
+		severity failure;
 		for i in pixels'range loop
 			read(bmp, pixels(i)); -- B.
 			read(bmp, tmp); -- G.

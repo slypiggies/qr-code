@@ -19,8 +19,6 @@ architecture processing_tb_a of processing_tb is
 	signal pixel_r, pixel_w: unsigned(PIXEL_LENGTH - 1 downto 0);
 	signal we: std_logic;
 begin
-	assert H mod 4 = 0 severity failure;
-	assert V mod 4 = 0 severity failure;
 	assert not USE_RGB565 severity failure;
 	
 	fake_frame_buffer_y_in_i: entity fake_frame_buffer_y_in generic map (

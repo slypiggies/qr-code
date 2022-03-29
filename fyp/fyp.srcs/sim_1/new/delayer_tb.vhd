@@ -7,7 +7,7 @@ use helper_tb.all;
 
 entity delayer_tb is
 	port (
-		reset, clk: std_logic
+		reset, clk: in std_logic
 	);
 end entity;
 

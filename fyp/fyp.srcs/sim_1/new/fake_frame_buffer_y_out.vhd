@@ -19,11 +19,11 @@ entity fake_frame_buffer_y_out is
 end entity;
 
 architecture fake_frame_buffer_y_out_a of fake_frame_buffer_y_out is
-	signal pixels: character_array_t(0 to H * V - 1);
+	signal pixels: character_array_t(0 to H * V - 1) := (others => character'val(0));
 begin
 	assert addr < to_unsigned(H * V, addr'length) severity warning; -- May occur in the beginning.
 	process (addr, pixel) begin -- Does not work for some reason, if 1) `process` is not used, or 2) `addr` is absent, or 3) `all` is used.
-		pixels(to_integer(addr)) <= character'val(to_integer(pixel & (8 - pixel'length downto 1 => '0')));
+		pixels(to_integer(addr)) <= character'val(to_integer(pixel & (8 - pixel'length downto 1 => pixel(pixel'left)))); -- `pixel(pixel'left)` instead of `'0'` is for when `pixel'length` is 1.
 	end process;
 	
 	bmp_writer_i: entity bmp_writer generic map (

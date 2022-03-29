@@ -374,6 +374,7 @@ package body helper is
 	end procedure;
 	procedure check_assertions is begin
 		for i in ASSERTIONS'range loop
+			assert ASSERTIONS(i) report natural'image(i) severity failure; -- To have a more readable message in simulation.
 			assert_synth(ASSERTIONS(i));
 		end loop;
 	end procedure;
