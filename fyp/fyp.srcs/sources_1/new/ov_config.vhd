@@ -32,11 +32,13 @@ begin
 				else
 					ed <= '1';
 				end if;
-			elsif not USE_CONFIG then
-				ed <= '1';
-			else
-				if cnt < to_unsigned(CONFIG_Y'length, cnt'length) then
-					config <= CONFIG_Y(to_integer(cnt));
+			else -- `USE_Y` or `USE_BW`.
+				if USE_CONFIG then
+					if cnt < to_unsigned(CONFIG_Y'length, cnt'length) then
+						config <= CONFIG_Y(to_integer(cnt));
+					else
+						ed <= '1';
+					end if;
 				else
 					ed <= '1';
 				end if;

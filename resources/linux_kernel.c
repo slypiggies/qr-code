@@ -153,13 +153,13 @@ struct regval_list {
 };
 
 static struct regval_list ov7670_default_regs[] = {
-	// { REG_COM7, COM7_RESET },
+//	{ REG_COM7, COM7_RESET },
 /*
  * Clock scale: 3 = 15fps
  *              2 = 20fps
  *              1 = 30fps
  */
-	{ REG_CLKRC, 0x0 },	/* OV: clock scale (30 fps) */ // { REG_CLKRC, 0x1 },	/* OV: clock scale (30 fps) */
+	{ REG_CLKRC, 0x0 },	/* OV: clock scale (30 fps) */ //{ REG_CLKRC, 0x1 },	/* OV: clock scale (30 fps) */
 	{ REG_TSLB,  0x04 },	/* OV */
 	{ REG_COM7, 0 },	/* VGA */
 	/*
@@ -267,7 +267,7 @@ static struct regval_list ov7670_default_regs[] = {
 	{ 0x79, 0x05 },		{ 0xc8, 0x30 },
 	{ 0x79, 0x26 },
 
-	// { 0xff, 0xff },	/* END MARKER */
+//	{ 0xff, 0xff },	/* END MARKER */
 };
 
 static struct regval_list ov7670_fmt_yuv422[] = {
@@ -283,7 +283,7 @@ static struct regval_list ov7670_fmt_yuv422[] = {
 	{ 0x53, 0x5e },		/* "matrix coefficient 5" */
 	{ 0x54, 0x80 },		/* "matrix coefficient 6" */
 	{ REG_COM13, COM13_GAMMA|COM13_UVSAT },
-	// { 0xff, 0xff },
+//	{ 0xff, 0xff },
 };
 
 static struct regval_list ov7670_fmt_rgb565[] = {
@@ -299,18 +299,18 @@ static struct regval_list ov7670_fmt_rgb565[] = {
 	{ 0x53, 0xa7 },		/* "matrix coefficient 5" */
 	{ 0x54, 0xe4 },		/* "matrix coefficient 6" */
 	{ REG_COM13, COM13_GAMMA|COM13_UVSAT },
-	// { 0xff, 0xff },
+//	{ 0xff, 0xff },
 };
 
-void print_uchar(unsigned char x) {
+static void printUchar(unsigned char x) {
 	printf("%02hhX", x);
 }
 
-void print_regval_list(struct regval_list x) {
-	printf("X\"");
-	print_uchar(x.reg_num);
-	print_uchar(x.value);
-	printf("\",\n");
+static void printRegvalList(struct regval_list x) {
+	printf("& X\"");
+	printUchar(x.reg_num);
+	printUchar(x.value);
+	printf("\"\n");
 }
 
 int main() {
@@ -320,17 +320,17 @@ int main() {
 	
 	printf("%u\n", z + x);
 	for (size_t i = 0; i < z; i++) {
-		print_regval_list(ov7670_default_regs[i]);
+		printRegvalList(ov7670_default_regs[i]);
 	}
 	for (size_t i = 0; i < x; i++) {
-		print_regval_list(ov7670_fmt_rgb565[i]);
+		printRegvalList(ov7670_fmt_rgb565[i]);
 	}
 	
-	// printf("%u\n", z + y);
-	// for (size_t i = 0; i < z; i++) {
-	// 	print_regval_list(ov7670_default_regs[i]);
-	// }
-	// for (size_t i = 0; i < y; i++) {
-	// 	print_regval_list(ov7670_fmt_yuv422[i]);
-	// }
+//	printf("%u\n", z + y);
+//	for (size_t i = 0; i < z; i++) {
+//		printRegvalList(ov7670_default_regs[i]);
+//	}
+//	for (size_t i = 0; i < y; i++) {
+//		printRegvalList(ov7670_fmt_yuv422[i]);
+//	}
 }

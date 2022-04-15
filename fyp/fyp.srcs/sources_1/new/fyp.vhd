@@ -61,9 +61,6 @@ begin
 	
 	debouncer_i: entity debouncer port map (clk => CLK100, i => BTNC, o => reset);
 	
-	OV_PWDN <= reset;
-	OV_RESET <= not reset;
-	
 	clk_divider_i: entity clk_divider generic map (
 		DIVIDER => 4
 	) port map (reset => reset, i => CLK100, o => clk25);

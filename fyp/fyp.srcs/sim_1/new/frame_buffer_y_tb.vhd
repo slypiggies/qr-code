@@ -7,47 +7,60 @@ use helper.all;
 use helper_tb.all;
 
 entity frame_buffer_y_tb is
-	port (clk: in std_logic);
+	port (
+		reset, clk100: in std_logic
+	);
 end entity;
 
 architecture frame_buffer_y_tb_a of frame_buffer_y_tb is
+	signal clk25: std_logic;
 	signal addra, addrb: unsigned(ADDR_LENGTH - 1 downto 0) := (others => '0');
 	signal dina: unsigned(PIXEL_LENGTH - 1 downto 0) := (others => '0');
 	signal doutb: unsigned(PIXEL_LENGTH - 1 downto 0);
 	
-	COMPONENT frame_buffer_y
-	  PORT (
-		clka : IN STD_LOGIC;
-		wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-		addra : IN STD_LOGIC_VECTOR(18 DOWNTO 0);
-		dina : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-		clkb : IN STD_LOGIC;
-		addrb : IN STD_LOGIC_VECTOR(18 DOWNTO 0);
-		doutb : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
-	  );
-	END COMPONENT;
+	component frame_buffer_y is
+		port (
+			clka: in std_logic;
+			wea: in std_logic_vector(0 downto 0);
+			addra: in std_logic_vector(ADDR_LENGTH - 1 downto 0);
+			dina: in std_logic_vector(PIXEL_LENGTH - 1 downto 0);
+			clkb: in std_logic;
+			addrb: in std_logic_vector(ADDR_LENGTH - 1 downto 0);
+			doutb: out std_logic_vector(PIXEL_LENGTH - 1 downto 0)
+		);
+	end component;
 begin
+	assert USE_Y severity failure; -- Because `frame_buffer_y` is being tested here.
+	
+	clk_divider_i: entity clk_divider generic map (
+		DIVIDER => 4
+	) port map (
+		reset => reset,
+		i => clk100,
+		o => clk25
+	);
+	
 	frame_buffer_y_i: frame_buffer_y port map (
-		clka => clk,
+		clka => clk100,
 		wea => "1",
 		addra => std_logic_vector(addra),
 		dina => std_logic_vector(dina),
-		clkb => clk,
+		clkb => clk25,
 		addrb => std_logic_vector(addrb),
 		unsigned(doutb) => doutb
 	);
 	
 	process (all) begin
-		if rising_edge(clk) then
+		if rising_edge(clk100) then
 			addra <= addra + 1;
 			dina <= dina + 1;
 		end if;
 	end process;
 	
 	process begin
-		wait until addra = to_unsigned(1, addra'length);
+		wait until addra = to_unsigned(1, addra'length); -- Avoid reading too early.
 		while true loop
-			wait until rising_edge(clk);
+			wait until rising_edge(clk25);
 			addrb <= addrb + 1;
 		end loop;
 		wait;

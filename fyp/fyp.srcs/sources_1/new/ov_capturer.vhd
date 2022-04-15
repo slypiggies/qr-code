@@ -29,8 +29,8 @@ begin
 	addr <= addr_2;
 	pixel_2 <=
 		d_2(15 downto 15 - COLOR_LENGTH + 1) & d_2(10 downto 10 - COLOR_LENGTH + 1) & d_2(4 downto 4 - COLOR_LENGTH + 1) when USE_RGB565
-		else d_2(7 downto 7 - COLOR_LENGTH + 1) when not USE_CONFIG
-		else d_2(15 downto 15 - COLOR_LENGTH + 1);
+		else d_2(15 downto 15 - COLOR_LENGTH + 1) when USE_CONFIG
+		else d_2(7 downto 7 - COLOR_LENGTH + 1);
 	pixel <= unsigned(pixel_2);
 	
 	process (all) begin

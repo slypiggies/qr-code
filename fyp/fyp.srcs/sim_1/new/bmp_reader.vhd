@@ -2,13 +2,14 @@ use std.all;
 use textio.all;
 use work.all;
 use helper_tb.all;
+use helper.all;
 
 entity bmp_reader is
 	generic (
 		FILE_NAME: string
 	);
 	port (
-		header: out character_array_t(0 to BMP_HEADER_LENGTH - 1);
+		header: out character_array_t(0 to BMP_HEADER_LEN - 1);
 		pixels: out character_array_t(0 to H * V - 1);
 		ed: out boolean
 	);
@@ -22,7 +23,7 @@ begin
 	
 	ed <= ed_2;
 	process
-		file bmp: file_t open read_mode is BMP_PATH_PREFIX & FILE_NAME;
+		file bmp: file_t;
 		function to_natural(bytes: character_array_t(0 to 3)) return natural is begin
 			return
 				character'pos(bytes(0)) +
@@ -36,13 +37,14 @@ begin
 		alias bh: character_array_t(header'range) is header;
 		variable tmp: character;
 	begin
+		file_open(bmp, BMP_PATH & FILE_NAME & BMP_FILE_EXTENSION, read_mode);
 		for i in bh'range loop
 			read(bmp, bh(i));
 		end loop;
 		assert
 			bh(0 to 1) = "BM" and
-			to_natural(bh(2 to 5)) = BMP_HEADER_LENGTH + H * V * 3 and
-			to_natural(bh(10 to 13)) = BMP_HEADER_LENGTH and
+			to_natural(bh(2 to 5)) = BMP_HEADER_LEN + H * V * 3 and
+			to_natural(bh(10 to 13)) = BMP_HEADER_LEN and
 			to_natural(bh(14 to 17)) = 40 and
 			to_natural(bh(18 to 21)) = H and
 			to_natural(bh(22 to 25)) = V and

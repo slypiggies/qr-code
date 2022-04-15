@@ -1,43 +1,30 @@
-library ieee;
-use ieee.all;
+library ieee; use ieee.all;
 use std_logic_1164.all;
-use numeric_std.all;
 
 entity delayer is
-	generic (
-		DELAY: positive;
-		LENGTH: positive
-	);
+	generic (DELAY: positive);
 	port (
-		reset, clk: in std_logic;
-		i: in unsigned(LENGTH - 1 downto 0);
-		o: out unsigned(LENGTH - 1 downto 0);
+		rst, clk: in std_logic;
+		i: in integer; o: out integer;
 		we: out std_logic
 	);
 end entity;
 
-architecture delayer_a of delayer is
-	type unsigned_array_t is array(natural range <>) of unsigned(LENGTH - 1 downto 0);
-	signal shift_reg: unsigned_array_t(DELAY - 1 downto 0);
-	type std_logic_array_t is array(natural range <>) of std_logic;
-	signal shift_reg_we: std_logic_array_t(DELAY downto 0);
+architecture delayer of delayer is
+	signal shift_reg: integer_vector(0 to DELAY - 1);
+	signal shift_reg_we: std_logic_vector(0 to DELAY + 1 - 1);
 begin
-	o <= shift_reg(shift_reg'low);
-	we <= shift_reg_we(shift_reg_we'low);
-	process (all) begin
-		if reset = '1' then
-			shift_reg_we(shift_reg_we'high) <= '1';
-			for j in shift_reg_we'high - 1 downto shift_reg_we'low loop
-				shift_reg_we(j) <= '0';
-			end loop;
-		elsif rising_edge(clk) then
-			shift_reg(shift_reg'high) <= i;
-			for j in shift_reg'low to shift_reg'high - 1 loop
-				shift_reg(j) <= shift_reg(j + 1);
-			end loop;
-			for j in shift_reg_we'low to shift_reg_we'high - 1 loop
-				shift_reg_we(j) <= shift_reg_we(j + 1);
-			end loop;
+	o <= shift_reg(shift_reg'left);
+	we <= shift_reg_we(shift_reg_we'left);
+	process (all) is begin
+		if rising_edge(clk) then
+			if rst = '1' then
+				shift_reg_we(shift_reg_we'right) <= '1';
+				shift_reg_we(shift_reg_we'left to shift_reg_we'right - 1) <= (others => '0');
+			else
+				shift_reg <= shift_reg(shift_reg'left + 1 to shift_reg'right) & i;
+				shift_reg_we <= shift_reg_we(shift_reg_we'left + 1 to shift_reg_we'right) & '1';
+			end if;
 		end if;
 	end process;
 end architecture;
